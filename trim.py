@@ -71,6 +71,7 @@ def trimming(name):
 	# check the number of parsing blocks is same to RUNDOE_TAG
 	if tag <= len(jsons) + len(texts):
 		print('Blocks is  matching,', name)
+		#print('Tag', tag, 'Jsons', len(jsons), 'Text', len(texts))
 	else:
 		print('Blocks is Not matching,', name)
 		print('Tag', tag, 'Jsons', len(jsons), 'Text', len(texts))
@@ -94,7 +95,7 @@ def trimming(name):
 			elif line=='runcode:: text':
 				f.write(' '*4 + '.. sourcecode:: text\n\n')
 				text = texts[text_block_id].text.split('\n')  
-				for l in json:
+				for l in text:
 					f.write(' '*8 + l + '\n')
 				text_block_id += 1				
 			else:

@@ -83,48 +83,60 @@ Log
 
     .. sourcecode:: text
 
-        [
-            {
-                "category": "import",
-                "id": 53,
-                "level": "INFO",
-                "message": "Finished import container (lxc, utest_import) from (/test/c.tgz) (return=0)",
-                "ts": 1426526976,
-                "user": "Anonymous"
-            },
-            {
-                "category": "system",
-                "id": 52,
-                "level": "INFO",
-                "message": "Create a new folder at /home/vagrant/container-station-web/test/new_folder",
-                "ts": 1426526973,
-                "user": "Anonymous"
-            },
-            {
-                "category": "import",
-                "id": 51,
-                "level": "INFO",
-                "message": "Import task logs are cleared",
-                "ts": 1426526967,
-                "user": "Anonymous"
-            },
-            {
-                "category": "import",
-                "id": 50,
-                "level": "INFO",
-                "message": "Start to import container (lxc, utest_import) from (/test/c.tgz)",
-                "ts": 1426526966,
-                "user": "Anonymous"
-            },
-            {
-                "category": "container",
-                "id": 49,
-                "level": "INFO",
-                "message": "Destroy container (lxc, utest_import)",
-                "ts": 1426526963,
-                "user": "Anonymous"
-            }
-        ]
+        Date,Level,Category,User,Message
+        2015-03-16 17:26:45.627297,INFO,container,Anonymous,"Destroy container (lxc, utest)"
+        2015-03-16 17:26:45.912700,INFO,backup,system,"Start to backup container (lxc, utest)"
+        2015-03-16 17:26:45.951865,INFO,backup,system,"Finished backup container (lxc, utest)"
+        2015-03-16 17:26:46.167602,INFO,backup,system,"Start to restore container (lxc, utest)"
+        2015-03-16 17:26:46.173896,ERROR,backup,system,"Backup error: [[Errno 2] No such file or directory: '/home/vagrant/container-station-web/ctstation/../test/image/docker/tmp3G9S2Y-import-docker/metadata'] (lxc, utest)"
+        2015-03-16 17:26:46.177475,INFO,backup,system,"Finished restore container (lxc, utest)"
+        2015-03-16 17:26:46.387085,INFO,backup,system,"Start to backup container (lxc, utest)"
+        2015-03-16 17:26:46.393715,INFO,backup,system,"Finished backup container (lxc, utest)"
+        2015-03-16 17:27:49.262017,INFO,image,Anonymous,"Start to download image from appcenter (lxc, ubuntu-trusty:latest)"
+        2015-03-16 17:28:05.349159,INFO,image,Anonymous,"Finished to download image from appcenter (lxc, ubuntu-trusty:latest)"
+        2015-03-16 17:28:11.674225,INFO,container,Anonymous,"Create container (lxc, utest)"
+        2015-03-16 17:28:17.524110,INFO,container,Anonymous,"Stop container (lxc, utest)"
+        2015-03-16 17:28:17.752067,INFO,container,Anonymous,"Destroy container (lxc, utest)"
+        2015-03-16 17:28:19.162231,INFO,container,Anonymous,"Create container (lxc, utest)"
+        2015-03-16 17:28:19.565798,INFO,container,Anonymous,"Stop container (docker, ed00311d9b98, DockerTestAPI)"
+        2015-03-16 17:28:21.893817,INFO,container,Anonymous,"Destroy container (docker, ed00311d9b98, DockerTestAPI)"
+        2015-03-16 17:28:22.449384,INFO,container,Anonymous,"Create container (docker, 397568fb6bde, DockerTestAPI)"
+        2015-03-16 17:28:24.531240,INFO,container,Anonymous,"Create container (docker, 978cf9969290, DockerTestAPI2)"
+        2015-03-16 17:28:26.714467,INFO,container,Anonymous,"Stop container (lxc, utest)"
+        2015-03-16 17:28:27.337507,INFO,container,Anonymous,"Start container (lxc, utest)"
+        2015-03-16 17:28:27.400314,INFO,container,Anonymous,"Stop container (docker, 397568fb6bde, DockerTestAPI)"
+        2015-03-16 17:28:27.577804,INFO,container,Anonymous,"Start container (docker, 397568fb6bde, DockerTestAPI)"
+        2015-03-16 17:28:33.445781,INFO,container,Anonymous,"Restart container (lxc, utest)"
+        2015-03-16 17:28:33.666464,INFO,container,Anonymous,"Restart container (docker, 397568fb6bde, DockerTestAPI)"
+        2015-03-16 17:28:39.013871,INFO,container,Anonymous,"Stop container (lxc, utest)"
+        2015-03-16 17:28:39.075171,INFO,container,Anonymous,"Stop container (docker, 397568fb6bde, DockerTestAPI)"
+        2015-03-16 17:28:39.307321,INFO,container,Anonymous,"Destroy container (lxc, utest)"
+        2015-03-16 17:28:39.415343,INFO,container,Anonymous,"Stop container (docker, 978cf9969290, DockerTestAPI2)"
+        2015-03-16 17:28:39.972855,INFO,container,Anonymous,"Destroy container (docker, 978cf9969290, DockerTestAPI2)"
+        2015-03-16 17:28:41.468491,INFO,container,Anonymous,"Destroy container (lxc, ctest)"
+        2015-03-16 17:28:41.573641,INFO,container,Anonymous,"Start to create container (lxc, ctest)"
+        2015-03-16 17:28:41.636683,INFO,container,Anonymous,"Stop container (docker, b6112ba86c28, dtest)"
+        2015-03-16 17:28:42.684474,INFO,container,Anonymous,"Destroy container (docker, b6112ba86c28, dtest)"
+        2015-03-16 17:28:42.878175,INFO,container,Anonymous,Create task logs are cleared
+        2015-03-16 17:28:44.108306,INFO,container,Anonymous,"Create container (lxc, ctest)"
+        2015-03-16 17:28:45.669890,INFO,container,Anonymous,"Finished create container (lxc, ctest) (return=0)"
+        2015-03-16 17:28:45.673042,INFO,container,Anonymous,"Start to create container (docker, dtest)"
+        2015-03-16 17:28:45.933893,INFO,container,Anonymous,"Create container (docker, f3ba3b9a079f, dtest)"
+        2015-03-16 17:28:45.963925,INFO,container,Anonymous,"Finished create container (docker, dtest) (return=0)"
+        2015-03-16 17:28:54.125871,INFO,image,Anonymous,"Start to download image from dockerhub (docker, lgsd/diamond:latest)"
+        2015-03-16 17:28:54.132426,WARN,image,Anonymous,"Download: Image already exists (dockerhub, docker, lgsd/diamond:latest)"
+        2015-03-16 17:28:56.489398,INFO,image,Anonymous,"Image removed (docker, lgsd/diamond)"
+        2015-03-16 17:28:58.271156,INFO,container,Anonymous,"Create container (lxc, utest)"
+        2015-03-16 17:28:58.726121,INFO,export,Anonymous,"Start to export container (lxc, utest) to (/test/c.tgz)"
+        2015-03-16 17:29:01.005295,INFO,export,Anonymous,Export task logs are cleared
+        2015-03-16 17:29:08.835915,INFO,export,Anonymous,"Finished export container (lxc, utest) to (/test/c.tgz) (return=0)"
+        2015-03-16 17:29:08.841483,INFO,export,Anonymous,"Start to export container (docker, 397568fb6bde, DockerTestAPI) to (/test/d.tgz)"
+        2015-03-16 17:29:22.977553,INFO,export,Anonymous,"Finished export container (docker, 397568fb6bde, DockerTestAPI) to (/test/d.tgz) (return=0)"
+        2015-03-16 17:29:23.314150,INFO,container,Anonymous,"Destroy container (lxc, utest_import)"
+        2015-03-16 17:29:26.417469,INFO,import,Anonymous,"Start to import container (lxc, utest_import) from (/test/c.tgz)"
+        2015-03-16 17:29:27.115561,INFO,import,Anonymous,Import task logs are cleared
+        2015-03-16 17:29:33.778059,INFO,system,Anonymous,Create a new folder at /home/vagrant/container-station-web/test/new_folder
+        2015-03-16 17:29:36.899476,INFO,import,Anonymous,"Finished import container (lxc, utest_import) from (/test/c.tgz) (return=0)"
         
         
 Event

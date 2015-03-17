@@ -57,24 +57,29 @@ Compose application
 
     .. sourcecode:: text
 
-        [
-            {
-                "description": "Dockerized gitlab web server",
-                "id": 1,
-                "image": "meersbn/postgresql:9.4, sameersbn/gitlab:7.8.2",
-                "name": "gitlab",
-                "source": "https://registry.hub.docker.com/u/sameersbn/gitlab/",
-                "type": ""
-            },
-            {
-                "description": "",
-                "id": 2,
-                "image": "sameersbn/postgresql:9.1-1, sameersbn/redmine:3.0.0",
-                "name": "redmine",
-                "source": "https://registry.hub.docker.com/u/sameersbn/redmine/",
-                "type": ""
-            }
-        ]
+        GitLab with PostgrSQL + Redis
+        =======================
+        
+        ## System requirements
+        Recommend 2GB of RAM for your Host and 2 Cores for best performance!
+        
+        ## Setup
+        The values of environemental variables for both PostgreSQL and GitLab need to match. The Keys cannot change. Also, the aliases used in the links to Redis and Posatgres from GHitLab cannot change.
+        
+        If the GitLab service does not start up, try the **Rebuild App** function on the application details page to kick start it. Watch the journal for output.
+        
+        To view the GUI after launching the template, browse to http://panamax.local:10080.
+        
+        ## Running
+        __NOTE__: Please allow a few minutes for the GitLab service to start. Watch the journal output for the message:
+        
+        `Checking GitLab ... Finished`
+        
+        Login using the default username and password:
+        
+        username: **root**
+        
+        password: **5iveL!fe**
         
         
 .. http:get:: /api/v1/compose/(string:application)/define

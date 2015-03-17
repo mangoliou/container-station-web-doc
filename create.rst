@@ -11,9 +11,6 @@ Other function:
   * Container Clone
 
 
-.. automodule:: ctstation
-
-
 .. http:post:: /api/v1/image/create/(string:image_repository)/(string:image_type)
 
     .. autosimple:: api.container_create
@@ -39,15 +36,28 @@ Other function:
 
 **Example response of LXC**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPUT  http://${QIP}:${QPORT}/api/v1/container/lxc/ctest/stop -o /dev/null;
-        curl -sq -XDELETE  http://${QIP}:${QPORT}/api/v1/container/lxc/ctest -o /dev/null;
-        curl -sq -XPOST  -d
-            '{"type": "lxc", "name": "ctest", "image": "ubuntu-trusty", "tag": "latest"}'
-            http://${QIP}:${QPORT}/api/v1/image/create/appcenter/lxc
-            | python -m json.tool;
-
+        {
+            "create_params": {
+                "image": "ubuntu-trusty",
+                "name": "ctest",
+                "tag": "latest",
+                "type": "lxc"
+            },
+            "detail_state": "",
+            "from": "appcenter",
+            "id": 1,
+            "image": "ubuntu-trusty",
+            "init": 1426526921,
+            "name": "ctest",
+            "state": "waiting",
+            "tag": "latest",
+            "type": "lxc",
+            "user": "Anonymous"
+        }
+        
+        
 **Example request of Docker**
 
     .. sourcecode:: bash
@@ -58,17 +68,28 @@ Other function:
 
 **Example response of Docker**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        id=`curl -sq -XGET  http://${QIP}:${QPORT}/api/v1/container/docker/getid/dtest`;
-        echo $id | grep -q error || curl -sq -XPUT  http://${QIP}:${QPORT}/api/v1/container/docker/${id}/stop -o /dev/null;
-        echo $id | grep -q error || curl -sq -XDELETE  http://${QIP}:${QPORT}/api/v1/container/docker/${id} -o /dev/null;
-        curl -sq -XPOST  -d 
-            '{"type": "docker", "name": "dtest", "image": "ubuntu", "tag": "latest"}'
-            http://${QIP}:${QPORT}/api/v1/image/create/dockerhub/docker
-            | python -m json.tool;
-
-
+        {
+            "create_params": {
+                "image": "ubuntu",
+                "name": "dtest",
+                "tag": "latest",
+                "type": "docker"
+            },
+            "detail_state": "",
+            "from": "dockerhub",
+            "id": 2,
+            "image": "ubuntu",
+            "init": 1426526922,
+            "name": "dtest",
+            "state": "waiting",
+            "tag": "latest",
+            "type": "docker",
+            "user": "Anonymous"
+        }
+        
+        
 .. http:get:: /api/v1/image/create/
 
     Get create tasks list.
@@ -95,10 +116,39 @@ Other function:
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XGET  http://${QIP}:${QPORT}/api/v1/image/create/ | python -m json.tool
-
+        [
+            {
+                "create_params": "{u'image': u'ubuntu', u'tag': u'latest', u'type': u'docker', u'name': u'dtest'}",
+                "detail_state": "",
+                "from": "dockerhub",
+                "id": 2,
+                "image": "ubuntu",
+                "init": 1426526922,
+                "name": "dtest",
+                "state": "waiting",
+                "tag": "latest",
+                "type": "docker",
+                "user": "Anonymous"
+            },
+            {
+                "create_params": "{u'image': u'ubuntu-trusty', u'tag': u'latest', u'type': u'lxc', u'name': u'ctest'}",
+                "detail_state": "creating",
+                "from": "appcenter",
+                "id": 1,
+                "image": "ubuntu-trusty",
+                "init": 1426526921,
+                "name": "ctest",
+                "start": 1426526921,
+                "state": "running",
+                "tag": "latest",
+                "type": "lxc",
+                "user": "Anonymous"
+            }
+        ]
+        
+        
     
 .. http:delete:: /api/v1/image/create/
 
@@ -114,8 +164,8 @@ Other function:
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XDELETE  http://${QIP}:${QPORT}/api/v1/image/create/ | python -m json.tool
-
-
+        []
+        
+        

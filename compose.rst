@@ -18,13 +18,28 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XGET -b cookies.txt
-            "http://${QIP}:${QPORT}/api/v1/compose/"
-            | python -m json.tool
-
-
+        [
+            {
+                "description": "Dockerized gitlab web server",
+                "id": 1,
+                "image": "meersbn/postgresql:9.4, sameersbn/gitlab:7.8.2",
+                "name": "gitlab",
+                "source": "https://registry.hub.docker.com/u/sameersbn/gitlab/",
+                "type": ""
+            },
+            {
+                "description": "",
+                "id": 2,
+                "image": "sameersbn/postgresql:9.1-1, sameersbn/redmine:3.0.0",
+                "name": "redmine",
+                "source": "https://registry.hub.docker.com/u/sameersbn/redmine/",
+                "type": ""
+            }
+        ]
+        
+        
 .. http:get:: /api/v1/compose/(string:application)/description
 
     Get application full description with markdown format.
@@ -40,12 +55,33 @@ Compose application
 
     **Example response**
 
-    .. runcode:: text
+    .. sourcecode:: text
 
-        curl -sq -XGET -b cookies.txt 
-            "http://${QIP}:${QPORT}/api/v1/compose/gitlab/description"
-
-
+        GitLab with PostgrSQL + Redis
+        =======================
+        
+        ## System requirements
+        Recommend 2GB of RAM for your Host and 2 Cores for best performance!
+        
+        ## Setup
+        The values of environemental variables for both PostgreSQL and GitLab need to match. The Keys cannot change. Also, the aliases used in the links to Redis and Posatgres from GHitLab cannot change.
+        
+        If the GitLab service does not start up, try the **Rebuild App** function on the application details page to kick start it. Watch the journal for output.
+        
+        To view the GUI after launching the template, browse to http://panamax.local:10080.
+        
+        ## Running
+        __NOTE__: Please allow a few minutes for the GitLab service to start. Watch the journal output for the message:
+        
+        `Checking GitLab ... Finished`
+        
+        Login using the default username and password:
+        
+        username: **root**
+        
+        password: **5iveL!fe**
+        
+        
 .. http:get:: /api/v1/compose/(string:application)/define
 
     Get application full YAML definition.
@@ -61,12 +97,34 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XGET -b cookies.txt 
-            "http://${QIP}:${QPORT}/api/v1/compose/gitlab/define" | python -m json.tool
-
-
+        {
+            "gitlab": {
+                "image": "sameersbn/gitlab:7.8.2",
+                "links": [
+                    "redis:redisio",
+                    "postgresql:postgresql"
+                ],
+                "ports": [
+                    "10080:80",
+                    "10022:22"
+                ]
+            },
+            "postgresql": {
+                "environment": [
+                    "DB_USER=gitlab",
+                    "DB_PASS=secretpassword",
+                    "DB_NAME=gitlabhq_production"
+                ],
+                "image": "sameersbn/postgresql:9.4"
+            },
+            "redis": {
+                "image": "sameersbn/redis:latest"
+            }
+        }
+        
+        
 .. http:post:: /api/v1/compose/(string:application)/pull
 
     Pulls images for containers.
@@ -82,12 +140,11 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XGET -b cookies.txt 
-            "http://${QIP}:${QPORT}/api/v1/compose/gitlab/pull" | python -m json.tool
-
-
+        {}
+        
+        
 .. http:post:: /api/v1/compose/up
 
     Create and start containers.
@@ -104,12 +161,11 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/up" | python -m json.tool
-
-
+        {}
+        
+        
 .. http:post:: /api/v1/compose/restart
 
     Restart running application.
@@ -126,12 +182,11 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/restart" | python -m json.tool
-
-
+        {}
+        
+        
 .. http:post:: /api/v1/compose/kill
 
     Force stop application containers.
@@ -148,12 +203,11 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/kill" | python -m json.tool
-
-
+        {}
+        
+        
 .. http:post:: /api/v1/compose/start
 
     Start existing application.
@@ -170,12 +224,11 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/start" | python -m json.tool
-
-
+        {}
+        
+        
 .. http:post:: /api/v1/compose/stop
 
     Stop running application without removing them.
@@ -192,12 +245,11 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/stop" | python -m json.tool
-
-
+        {}
+        
+        
 .. http:post:: /api/v1/compose/rm
 
     Remove stopped application containers.
@@ -214,9 +266,8 @@ Compose application
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/rm" | python -m json.tool
-
-
+        {}
+        
+        

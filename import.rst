@@ -35,13 +35,21 @@ Export
 
 **Example response of LXC**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d
-            '{"type": "lxc", "name": "utest", "image": "ubuntu-trusty", "tag": "latest"}'
-            http://${QIP}:${QPORT}/api/v1/container -o /dev/null;
-        curl -sq -XPOST -d '{"path": "test/c.tgz", "compress": true, "force": true}' -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/export | python -m json.tool
-
+        {
+            "cid": "utest",
+            "cname": "utest",
+            "compress": true,
+            "id": 1,
+            "init": 1426526938,
+            "path": "/test/c.tgz",
+            "state": "waiting",
+            "type": "lxc",
+            "user": "Anonymous"
+        }
+        
+        
     
 **Example request of Docker**
 
@@ -55,11 +63,21 @@ Export
 
 **Example response of Docker**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        id=`curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/getid/DockerTestAPI` ;
-        curl -sq -XPOST -d '{"path": "test/d.tgz", "compress": true, "force": true}' -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id}/export | python -m json.tool
-
+        {
+            "cid": "397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c",
+            "cname": "DockerTestAPI",
+            "compress": true,
+            "id": 2,
+            "init": 1426526938,
+            "path": "/test/d.tgz",
+            "state": "waiting",
+            "type": "docker",
+            "user": "Anonymous"
+        }
+        
+        
 .. http:get:: /api/v1/export/
 
     Get export tasks list.
@@ -85,11 +103,36 @@ Export
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/export/ | python -m json.tool
-
-
+        [
+            {
+                "cid": "397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c",
+                "cname": "DockerTestAPI",
+                "compress": true,
+                "id": 2,
+                "init": 1426526938,
+                "path": "/test/d.tgz",
+                "state": "waiting",
+                "type": "docker",
+                "user": "Anonymous"
+            },
+            {
+                "cid": "utest",
+                "cname": "utest",
+                "compress": true,
+                "id": 1,
+                "init": 1426526938,
+                "path": "/test/c.tgz",
+                "progress": 0,
+                "start": 1426526938,
+                "state": "running",
+                "type": "lxc",
+                "user": "Anonymous"
+            }
+        ]
+        
+        
 .. http:get:: /api/v1/export/progress
 
     It's a long polling that returns when progress changed of tasks. This method only returns **progress** changing, where the task state changed, then the event will be triggered by :http:get:`/api/v1/event`.
@@ -102,12 +145,25 @@ Export
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        sleep 2;
-        curl -sq -m 5 -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/export/progress | python -m json.tool
-
-
+        [
+            {
+                "cid": "utest",
+                "cname": "utest",
+                "compress": true,
+                "id": 1,
+                "init": 1426526938,
+                "path": "/test/c.tgz",
+                "progress": 20,
+                "start": 1426526938,
+                "state": "running",
+                "type": "lxc",
+                "user": "Anonymous"
+            }
+        ]
+        
+        
 .. http:delete:: /api/v1/export/
 
     Clear completed/aborted tasks in database. It will response with task ID which have been deleted.
@@ -120,11 +176,11 @@ Export
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/export/ | python -m json.tool
-
-
+        []
+        
+        
 Import
 --------------
 
@@ -213,15 +269,14 @@ Import
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest_import -o /dev/null;
-        sleep 3;
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "type": "lxc",
+        {
+            "cid": "utest_import",
+            "cname": "utest_import",
+            "create_params": {
+                "image": "import",
                 "name": "utest_import",
-                "image": "utest",
                 "network": {
                     "hostname": "CustomHostName",
                     "port": [
@@ -246,21 +301,27 @@ Import
                         "memory": "768m"
                     }
                 },
+                "tag": "latest",
+                "type": "lxc",
                 "volume": {
                     "host": {
-                        "/var": {
+                        "null": {
                             "bind": "/mnt/vol1",
                             "ro": true
-                        },
-                        "/tmp": {
-                            "bind": "/mnt/vol2",
-                            "ro": false
                         }
                     }
                 }
-            }' http://${QIP}:${QPORT}/api/v1/import/test/?name=c.tgz | python -mjson.tool;
-
-
+            },
+            "id": 1,
+            "image": "import",
+            "init": 1426526966,
+            "path": "/test/c.tgz",
+            "state": "waiting",
+            "type": "lxc",
+            "user": "Anonymous"
+        }
+        
+        
 .. http:get:: /api/v1/import/
 
     Get import tasks list.
@@ -284,10 +345,26 @@ Import
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/import/ | python -m json.tool
-
+        [
+            {
+                "cid": "utest_import",
+                "cname": "utest_import",
+                "create_params": "{u'resource': {u'device': [[u'allow', u'Open_Sound_System_(OSS)', u'rw']], u'limit': {u'memory': u'768m', u'cputime': 512, u'cpuweight': 512}}, u'name': u'utest_import', u'image': 'import', u'volume': {u'host': {None: {u'bind': u'/mnt/vol1', u'ro': True}}}, 'tag': 'latest', u'type': u'lxc', u'network': {u'hostname': u'CustomHostName', u'port': [[12345, 1234, u'udp']]}}",
+                "id": 1,
+                "image": "import",
+                "init": 1426526966,
+                "path": "/test/c.tgz",
+                "progress": 4,
+                "start": 1426526966,
+                "state": "running",
+                "type": "lxc",
+                "user": "Anonymous"
+            }
+        ]
+        
+        
 .. http:get:: /api/v1/import/progress
 
     It's a long polling that returns when progress changed of tasks. This method only returns **progress** changing, where the task state changed, then the event will be triggered by :http:get:`/api/v1/event`.
@@ -300,12 +377,26 @@ Import
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -m 5 -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/import/progress | python -m json.tool
-
-
-
+        [
+            {
+                "cid": "utest_import",
+                "cname": "utest_import",
+                "create_params": "{u'resource': {u'device': [[u'allow', u'Open_Sound_System_(OSS)', u'rw']], u'limit': {u'memory': u'768m', u'cputime': 512, u'cpuweight': 512}}, u'name': u'utest_import', u'image': 'import', u'volume': {u'host': {None: {u'bind': u'/mnt/vol1', u'ro': True}}}, 'tag': 'latest', u'type': u'lxc', u'network': {u'hostname': u'CustomHostName', u'port': [[12345, 1234, u'udp']]}}",
+                "id": 1,
+                "image": "import",
+                "init": 1426526966,
+                "path": "/test/c.tgz",
+                "progress": 11,
+                "start": 1426526966,
+                "state": "running",
+                "type": "lxc",
+                "user": "Anonymous"
+            }
+        ]
+        
+        
 .. http:delete:: /api/v1/import/
 
     Clear completed/aborted tasks in database.
@@ -320,12 +411,11 @@ Import
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/import/ | python -m json.tool
-
-
-
+        []
+        
+        
 File operations
 ---------------
 
@@ -350,12 +440,61 @@ File operations
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/sharefolder/ | python -m json.tool; 
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/sharefolder/test | python -m json.tool;
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/sharefolder/Public | python -m json.tool;
-
+        [
+            {
+                "is_dir": true,
+                "name": "test",
+                "type": "d",
+                "write": true
+            }
+        ]
+        [
+            {
+                "is_dir": true,
+                "name": "backup",
+                "type": "d"
+            },
+            {
+                "is_dir": true,
+                "name": "image",
+                "type": "d"
+            },
+            {
+                "is_dir": true,
+                "name": "selenium",
+                "type": "d"
+            },
+            {
+                "is_dir": true,
+                "name": "spec",
+                "type": "d"
+            },
+            {
+                "is_dir": false,
+                "name": "c.tgz",
+                "type": "f"
+            },
+            {
+                "is_dir": false,
+                "name": "d.tgz",
+                "type": "f"
+            },
+            {
+                "is_dir": false,
+                "name": "runner.html",
+                "type": "f"
+            }
+        ]
+        {
+            "error": {
+                "code": 400,
+                "message": "Public"
+            }
+        }
+        
+        
 .. http:post:: /api/v1/sharefolder/(string:dirname)/(string:basename)/
 
     Create the directory or file, if they do not already exist.
@@ -382,7 +521,71 @@ File operations
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
+
+        [
+            {
+                "is_dir": true,
+                "name": "backup",
+                "type": "d"
+            },
+            {
+                "is_dir": true,
+                "name": "image",
+                "type": "d"
+            },
+            {
+                "is_dir": true,
+                "name": "new_folder",
+                "type": "d"
+            },
+            {
+                "is_dir": true,
+                "name": "selenium",
+                "type": "d"
+            },
+            {
+                "is_dir": true,
+                "name": "spec",
+                "type": "d"
+            },
+            {
+                "is_dir": false,
+                "name": "c.tgz",
+                "type": "f"
+            },
+            {
+                "is_dir": false,
+                "name": "d.tgz",
+                "type": "f"
+            },
+            {
+                "is_dir": false,
+                "name": "runner.html",
+                "type": "f"
+            }
+        ]
+        [
+            {
+                "is_dir": false,
+                "name": "new_file.json",
+                "type": "f"
+            }
+        ]
+        [
+            {
+                "is_dir": false,
+                "name": "new_file.json",
+                "type": "f"
+            },
+            {
+                "is_dir": false,
+                "name": "new_file.txt",
+                "type": "f"
+            }
+        ]
+        
+        
     
         curl -sq -XPOST -b cookies.txt -d '{"name":"new_folder", "is_dir":true}' \
           http://${QIP}:${QPORT}/api/v1/sharefolder/test/ | python -m json.tool;
@@ -408,10 +611,11 @@ File operations
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        #curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/sharefolder/test/new_folder/new_file.json | python -m json.tool;
-
+        
+        
+        
 .. http:delete:: /api/v1/sharefolder/(string:dirname)/(string:basename)/
 
     Delete directories and their contents
@@ -428,7 +632,8 @@ File operations
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/sharefolder/test/new_folder/ | python -m json.tool;
-
+        {}
+        
+        

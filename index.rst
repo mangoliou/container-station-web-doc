@@ -8,26 +8,23 @@ QNAP Container Station
 
 *QNAP Container Station* is a application on QNAP NAS providing container technology (operating system-level virtualization [1]_). It's mainly included a web UI, a back-end RESTful API server and essential utilities, such as commands lxc-* and docker. 
 
-Version: v0.38.2-15-gc2ebef3
-
 Content
 -------
 
 .. toctree::
     :maxdepth: 2
 
-    _system
-    _container
-    _create
-    _compose
-    _resource
-    _image
-    _import
-    _backup
-    _log
-    _preference
-    _draft
-
+    system
+    container
+    create
+    compose
+    resource
+    image
+    import
+    backup
+    log
+    preference
+    draft
 
 
 * :ref:`genindex`

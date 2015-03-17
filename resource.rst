@@ -1,8 +1,6 @@
 Resource
 ==================
 
-.. automodule:: ctstation
-
 .. http:get:: /api/v1/container/(string:container_type)/(string:container_id)/all
 
     .. autosimple:: api.resource_all
@@ -21,13 +19,27 @@ Resource
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '{"type": "lxc", "name": "utest", "image": "ubuntu-trusty", "tag": "latest"}' http://${QIP}:${QPORT}/api/v1/container  -o /dev/null; 
-        curl -sq -XGET -b cookies.txt 
-           http://${QIP}:${QPORT}/api/v1/container/lxc/utest/all
-           | python -mjson.tool
-
+        {
+            "autostart": false,
+            "image": "ubuntu-trusty",
+            "name": "utest",
+            "network": {
+                "hostname": "utest",
+                "port": []
+            },
+            "resource": {
+                "device": [],
+                "limit": {}
+            },
+            "type": "lxc",
+            "volume": {
+                "host": {}
+            }
+        }
+        
+        
 Hostname
 ----------
 
@@ -47,12 +59,27 @@ Hostname
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPUT -b cookies.txt -d 'yourhostname'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/network/hostname
-            | python -mjson.tool;
-
+        {
+            "autostart": false,
+            "image": "ubuntu-trusty",
+            "name": "utest",
+            "network": {
+                "hostname": "yourhostname",
+                "port": []
+            },
+            "resource": {
+                "device": [],
+                "limit": {}
+            },
+            "type": "lxc",
+            "volume": {
+                "host": {}
+            }
+        }
+        
+        
 Auto start
 ----------
 
@@ -75,15 +102,44 @@ Auto start
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPUT -b cookies.txt
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/autostart/on
-            | python -mjson.tool;
-        curl -sq -XPUT -b cookies.txt
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/autostart/off
-            | python -mjson.tool;
-
+        {
+            "autostart": true,
+            "image": "ubuntu-trusty",
+            "name": "utest",
+            "network": {
+                "hostname": "yourhostname",
+                "port": []
+            },
+            "resource": {
+                "device": [],
+                "limit": {}
+            },
+            "type": "lxc",
+            "volume": {
+                "host": {}
+            }
+        }
+        {
+            "autostart": false,
+            "image": "ubuntu-trusty",
+            "name": "utest",
+            "network": {
+                "hostname": "yourhostname",
+                "port": []
+            },
+            "resource": {
+                "device": [],
+                "limit": {}
+            },
+            "type": "lxc",
+            "volume": {
+                "host": {}
+            }
+        }
+        
+        
 Port Forwarding
 ---------------
 
@@ -103,12 +159,33 @@ Port Forwarding
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '[12345, 12345, "tcp"]' 
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/network/port
-            | python -mjson.tool;
-
+        {
+            "autostart": false,
+            "image": "ubuntu-trusty",
+            "name": "utest",
+            "network": {
+                "hostname": "yourhostname",
+                "port": [
+                    [
+                        12345,
+                        12345,
+                        "tcp"
+                    ]
+                ]
+            },
+            "resource": {
+                "device": [],
+                "limit": {}
+            },
+            "type": "lxc",
+            "volume": {
+                "host": {}
+            }
+        }
+        
+        
 .. http:delete:: /api/v1/container/(string:container_type)/(string:container_id)/network/port
 
     Delete port forwarding.
@@ -125,12 +202,11 @@ Port Forwarding
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XDELETE -b cookies.txt -d '[12345, 12345, "tcp"]' 
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/network/port
-            | python -mjson.tool;
-
+        []
+        
+        
 Devices 
 --------
 
@@ -148,10 +224,15 @@ Devices
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XGET http://${QIP}:${QPORT}/api/v1/resource/device | python -mjson.tool;
-
+        [
+            "Open_Sound_System_(OSS)",
+            "Direct_Render_Infrastructure_(DRI)",
+            "video4linux"
+        ]
+        
+        
 .. http:post:: /api/v1/container/(string:container_type)/(string:container_id)/resource/device
 
     Add device permission.
@@ -176,12 +257,33 @@ Devices
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '["allow", "Open_Sound_System_(OSS)", "rwm"]'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/device
-            | python -mjson.tool;
-
+        {
+            "autostart": false,
+            "image": "ubuntu-trusty",
+            "name": "utest",
+            "network": {
+                "hostname": "yourhostname",
+                "port": []
+            },
+            "resource": {
+                "device": [
+                    [
+                        "allow",
+                        "Open_Sound_System_(OSS)",
+                        "rwm"
+                    ]
+                ],
+                "limit": {}
+            },
+            "type": "lxc",
+            "volume": {
+                "host": {}
+            }
+        }
+        
+        
 .. http:delete:: /api/v1/container/(string:container_type)/(string:container_id)/resource/device
 
     Delete device permission.
@@ -198,12 +300,11 @@ Devices
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XDELETE -b cookies.txt -d '["allow", "Open_Sound_System_(OSS)", "rwm"]'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/device
-            | python -mjson.tool;
-
+        []
+        
+        
 Limit
 ----------
 
@@ -226,12 +327,31 @@ Limit
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XPOST -b cookies.txt -d '{"cputime": 100, "cpuweight": 600, "memory": "512m"}'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/limit
-            | python -mjson.tool;
-
+        {
+            "autostart": false,
+            "image": "ubuntu-trusty",
+            "name": "utest",
+            "network": {
+                "hostname": "yourhostname",
+                "port": []
+            },
+            "resource": {
+                "device": [],
+                "limit": {
+                    "cputime": 100,
+                    "cpuweight": 600,
+                    "memory": "512m"
+                }
+            },
+            "type": "lxc",
+            "volume": {
+                "host": {}
+            }
+        }
+        
+        
 .. http:delete:: /api/v1/container/(string:container_type)/(string:container_id)/resource/limit
 
     Delete resource limitation.
@@ -248,9 +368,8 @@ Limit
 
     **Example response**
 
-    .. runcode:: json
+    .. sourcecode:: json
 
-        curl -sq -XDELETE -b cookies.txt -d '{"cputime": 0}'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/limit
-            | python -mjson.tool;
-
+        []
+        
+        

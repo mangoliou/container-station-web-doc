@@ -1,24 +1,13 @@
 # python lib
 from __future__ import absolute_import, division, print_function, with_statement
+import os
 import urllib2
 
 # 3rd party lib
 from bs4 import BeautifulSoup
 
 site = 'http://qnap.dorowu.com/gitlab/uploads/dorowu/cs-web-auto/'
-rst_files = [
-	'system.rst',
-    'container.rst',
-    'create.rst',
-    'compose.rst',
-    'resource.rst',
-    'image.rst',
-    'import.rst',
-    'backup.rst',
-    'log.rst',
-    'preference.rst',
-    'draft.rst',
-]
+rst_files = []
 
 def count_starting_blank(string):
 	
@@ -26,9 +15,30 @@ def count_starting_blank(string):
 		if ch != ' ':
 			return i 
 
-def triming_index():
+def triming_conf():
+
+	delete_keywords = ['sphinx_rtd_theme', 'sys.path.insert', 'runcode']
 
 	trim_file = []
+	with open('conf.py', 'r') as f:
+		for line in f:
+			for keyword in delete_keywords:
+				if keyword in line:
+					break
+			else:
+				trim_file.append(line)
+
+	with open('conf.py', 'w') as f:
+		for line in trim_file:
+			f.write(line)
+
+
+def triming_index():
+
+	
+	trim_file = []
+	
+	# delete .. exec::
 	keep_deleting = False
 	with open('index.rst', 'r') as f:
 		for line in f:
@@ -44,9 +54,30 @@ def triming_index():
 				else:
 					trim_file.append(line)
 
+	# grap all .rst files
+	rst_flag = False
+	for i, line in enumerate(trim_file):
+
+		if rst_flag:
+
+			if line.startswith('\n') or line.startswith(' '):
+				if line!='\n':
+					rst_files.append(line.strip() + '.rst')
+			else:
+				rst_flag = False
+
+		if 'maxdepth'in line:
+			rst_flag = True
+
+	print (rst_files)
 	with open('index.rst', 'w') as f:
 		for line in trim_file:
 			f.write(line)
+
+def gen_dev():
+
+	with open('rtd-requirements.txt', 'w') as f:
+		f.write('sphinxcontrib-httpdomain==1.3.0')
 
 def trimming(name):
 
@@ -101,7 +132,7 @@ def trimming(name):
 
 
 	# write result to new file
-	with open('_' + name, 'w') as f:
+	with open(name, 'w') as f:
 		
 		# replace RUNCODE tag with json and text
 		json_block_id = 0
@@ -126,8 +157,14 @@ def trimming(name):
 
 if __name__ == '__main__':
 
+	#trim conf.py
+	triming_conf()
+
 	#trim index.rst
 	triming_index()
+
+	# generate dev files
+	gen_dev()
 
 	# trim .rst
 	for f in rst_files:

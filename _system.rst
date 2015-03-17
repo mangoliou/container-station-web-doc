@@ -1,6 +1,8 @@
 System
 =============
 
+
+
 Authentication
 ------------------
 
@@ -30,6 +32,9 @@ Authentication
         }
         
         
+
+        curl -sq -XPOST -c cookies.txt -d 'username=admin&password=admin' http://${QIP}:${QPORT}/api/v1/login  | python -mjson.tool
+
 .. http:get:: /api/v1/login_refresh
 
     .. autosimple:: api.login_refresh
@@ -55,6 +60,9 @@ Authentication
         }
         
         
+
+        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/login_refresh | python -mjson.tool
+
 .. http:put:: /api/v1/logout
 
     .. autosimple:: api.logout
@@ -76,6 +84,9 @@ Authentication
         }
         
         
+
+        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/logout | python -mjson.tool
+
 System Information
 ------------------
 
@@ -115,6 +126,9 @@ System Information
         }
         
         
+
+        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/system | python -mjson.tool
+
 .. http:get:: /api/v1/system/resource
 
     .. autosimple:: api.system_resource_info
@@ -146,6 +160,9 @@ System Information
         }
         
         
+
+        curl -sq http://${QIP}:${QPORT}/api/v1/system/resource | python -mjson.tool
+
 System Port 
 ------------------
 
@@ -174,3 +191,6 @@ System Port
         }
         
         
+
+        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/system/port/tcp/5000 | python -mjson.tool;
+        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/system/port/udp/33806 | python -mjson.tool;

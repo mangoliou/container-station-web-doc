@@ -6,109 +6,103 @@ import urllib2
 from bs4 import BeautifulSoup
 
 site = 'http://qnap.dorowu.com/gitlab/uploads/dorowu/cs-web-auto/'
-rst_files = ['system.rst']
+rst_files = [
+	'system.rst',
+    'container.rst',
+    'create.rst',
+    'compose.rst',
+    'resource.rst',
+    'image.rst',
+    'import.rst',
+    'backup.rst',
+    'log.rst',
+    'preference.rst',
+    'draft.rst',
+]
 
+def count_starting_blank(string):
+	
+	for i, ch in enumerate(string):
+		if ch != ' ':
+			return i 
 
 def trimming(name):
 
 	""" Trim the ..automodule and ..runcode blocks and parse json response."""
 
-	delete_keywords = ['runcode', 'automodule']
+	delete_keywords = ['runcode:: json', 'runcode:: text', 'automodule']
 	trim_file = []
-	runcode_num = 0
+	tag = 0
 
 	# trim the file and store to trim_file list
 	with open(name, 'r') as f:
 
 		keep_deleting = False
+		blank_number = 0
 		for line in f:
 			
 			if keep_deleting:
-				if line.startswith(' ') or line.startswith('\n') or line.startswith('\t'):
+				if count_starting_blank(line) > blank_number:
 					pass
 				else:
 					keep_deleting = False
+					blank_number = 0
 					trim_file.append(line)
 			else:
 				for word in delete_keywords:
 					if word in line:
 						keep_deleting = True
-						if word=='runcode':
-							trim_file.append('RUNCODE')
-							runcode_num += 1
+						if word=='runcode:: json' or word=='runcode:: text':
+							trim_file.append(word)
+							blank_number = count_starting_blank(line)
+							tag += 1
 						break
 				else:
 					trim_file.append(line)
 
-	# parse_response_json
+	# parse_response
 	page = urllib2.urlopen(site + name.split('.')[0] + '.html')
 
 	soup = BeautifulSoup(page)
 	jsons = soup.findAll('div', attrs={'class' : 'highlight-json'})
 
-	if runcode_num != len(jsons):
-		print('Blocks is not matching', name)
-		return
+	texts = soup.findAll('div', attrs={'class' : 'highlight-text'})
+
+	# check the number of parsing blocks is same to RUNDOE_TAG
+	if tag <= len(jsons) + len(texts):
+		print('Blocks is  matching,', name)
 	else:
-		print('Blocks is matching', name)
-	
+		print('Blocks is Not matching,', name)
+		print('Tag', tag, 'Jsons', len(jsons), 'Text', len(texts))
+		return
 
 
 	# write result to new file
 	with open('_' + name, 'w') as f:
 		
 		# replace RUNCODE tag with json 
-		block_id = 0
+		json_block_id = 0
+		text_block_id = 0
 		for i, line in enumerate(trim_file):
 
-			if line=='RUNCODE':
-				
+			if line=='runcode:: json':
 				f.write(' '*4 + '.. sourcecode:: json\n\n')
-				json = jsons[block_id].text.split('\n')  
+				json = jsons[json_block_id].text.split('\n')  
 				for l in json:
 					f.write(' '*8 + l + '\n')
-				block_id += 1
-
+				json_block_id += 1
+			elif line=='runcode:: text':
+				f.write(' '*4 + '.. sourcecode:: text\n\n')
+				text = texts[text_block_id].text.split('\n')  
+				for l in json:
+					f.write(' '*8 + l + '\n')
+				text_block_id += 1				
 			else:
 				f.write(line)
 
+
 if __name__ == '__main__':
 
-	trimming('system.rst')
-"""
-	page = urllib2.urlopen('http://qnap.dorowu.com/gitlab/uploads/dorowu/cs-web-auto/system.html')
-
-	soup = BeautifulSoup(page)
-	texts = soup.findAll('div', attrs={'class' : 'highlight-json'})
-	print(len(texts))
-	#for t in texts:
-	#	print(t.text)
-"""
-"""
-	delete_keywords = ['runcode', 'automodule']
-	trim_file = []
-
-
-	with open('system.rst', 'r') as f:
-
-		keep_deleting = False
-		for line in f:
-			
-			if keep_deleting:
-				if line.startswith(' ') or line.startswith('\n') or line.startswith('\t'):
-					pass
-				else:
-					keep_deleting = False
-					trim_file.append(line)
-			else:
-				for word in delete_keywords:
-					if word in line:
-						keep_deleting = True
-						break
-				else:
-					trim_file.append(line)
-
-	with open('_system.rst', 'w') as f:
-		for line in trim_file:
-			f.write(line);
-"""
+	for f in rst_files:
+		trimming(f)
+	#trimming('import.rst')

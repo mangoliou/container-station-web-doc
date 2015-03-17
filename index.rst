@@ -16,6 +16,16 @@ Content
     :maxdepth: 2
 
     _system
+    _container
+    _create
+    _compose
+    _resource
+    _image
+    _import
+    _backup
+    _log
+    _preference
+    _draft
 
 
 

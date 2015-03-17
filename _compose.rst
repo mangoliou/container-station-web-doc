@@ -40,12 +40,6 @@ Compose application
         ]
         
         
-
-        curl -sq -XGET -b cookies.txt
-            "http://${QIP}:${QPORT}/api/v1/compose/"
-            | python -m json.tool
-
-
 .. http:get:: /api/v1/compose/(string:application)/description
 
     Get application full description with markdown format.
@@ -83,11 +77,6 @@ Compose application
         ]
         
         
-
-        curl -sq -XGET -b cookies.txt 
-            "http://${QIP}:${QPORT}/api/v1/compose/gitlab/description"
-
-
 .. http:get:: /api/v1/compose/(string:application)/define
 
     Get application full YAML definition.
@@ -131,11 +120,6 @@ Compose application
         }
         
         
-
-        curl -sq -XGET -b cookies.txt 
-            "http://${QIP}:${QPORT}/api/v1/compose/gitlab/define" | python -m json.tool
-
-
 .. http:post:: /api/v1/compose/(string:application)/pull
 
     Pulls images for containers.
@@ -156,11 +140,6 @@ Compose application
         {}
         
         
-
-        curl -sq -XGET -b cookies.txt 
-            "http://${QIP}:${QPORT}/api/v1/compose/gitlab/pull" | python -m json.tool
-
-
 .. http:post:: /api/v1/compose/up
 
     Create and start containers.
@@ -182,11 +161,6 @@ Compose application
         {}
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/up" | python -m json.tool
-
-
 .. http:post:: /api/v1/compose/restart
 
     Restart running application.
@@ -208,11 +182,6 @@ Compose application
         {}
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/restart" | python -m json.tool
-
-
 .. http:post:: /api/v1/compose/kill
 
     Force stop application containers.
@@ -234,11 +203,6 @@ Compose application
         {}
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/kill" | python -m json.tool
-
-
 .. http:post:: /api/v1/compose/start
 
     Start existing application.
@@ -260,11 +224,6 @@ Compose application
         {}
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/start" | python -m json.tool
-
-
 .. http:post:: /api/v1/compose/stop
 
     Stop running application without removing them.
@@ -286,11 +245,6 @@ Compose application
         {}
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/stop" | python -m json.tool
-
-
 .. http:post:: /api/v1/compose/rm
 
     Remove stopped application containers.
@@ -312,8 +266,3 @@ Compose application
         {}
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"application": "gitlab", "name": "test"}' 
-            "http://${QIP}:${QPORT}/api/v1/compose/rm" | python -m json.tool
-
-

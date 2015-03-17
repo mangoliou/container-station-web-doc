@@ -143,12 +143,6 @@ Images would be from the depots, including
         }
         
         
-
-        curl -sq -XGET -b cookies.txt
-            "http://${QIP}:${QPORT}/api/v1/image/?from=local"
-            | python -m json.tool
-
-
     From App Center:
 
     **Example request**
@@ -340,10 +334,6 @@ Images would be from the depots, including
         }
         
         
-
-        curl -sq -XGET -b cookies.txt
-            "http://${QIP}:${QPORT}/api/v1/image/?from=appcenter"
-            | python -m json.tool
     
     
     From Docker Official Repositories:
@@ -472,12 +462,6 @@ Images would be from the depots, including
         }
         
         
-
-        curl -sq -XGET -b cookies.txt
-            "http://${QIP}:${QPORT}/api/v1/image/?from=official"
-            | python -m json.tool
-
-
     From Docker Hub:
 
     **Example request**
@@ -597,12 +581,6 @@ Images would be from the depots, including
         }
         
         
-
-        curl -sq -XGET -b cookies.txt
-            "http://${QIP}:${QPORT}/api/v1/image/?from=dockerhub&filter_text=dorowu"
-            | python -m json.tool
-
-
 .. http:get:: /api/v1/image/(string:image_type)/(string:image_name)/(string:image_tag)/inspect
 
     Inspect image information.
@@ -699,11 +677,6 @@ Images would be from the depots, including
         }
         
         
-
-        curl -sq -XGET -b cookies.txt 
-            "http://${QIP}:${QPORT}/api/v1/image/docker/ubuntu/latest/inspect" | python -m json.tool
-
-
 .. http:get:: /api/v1/image/dockerhub/docker/(string:is_official)/(string:image_name)/tags
 
     Get image tags from Docker Hub. It will take a few seconds to finish.
@@ -751,11 +724,6 @@ Images would be from the depots, including
         }
         
         
-
-        curl -sq -XGET -b cookies.txt 
-            "http://${QIP}:${QPORT}/api/v1/image/dockerhub/docker/1/redis/tags" | python -m json.tool
-
-
 .. http:post:: /api/v1/image/(string:from)/(string:image_type)/(string:image_name)/(string:image_tag)/download
 
     Download the image from app center or docker hub
@@ -787,13 +755,6 @@ Images would be from the depots, including
         {}
         
         
-
-        curl -sq -XPOST -b cookies.txt 
-            -d '{"description": "I am description.", "location": "https://registry.hub.docker.com/u/lgsd/diamond/",
-                "icon": "http://download.qnap.com/QPKG/images/QPKG/container_icon.png" }'
-            "http://${QIP}:${QPORT}/api/v1/image/dockerhub/docker/lgsd/diamond/latest/download" | python -m json.tool
-
-
 .. http:get:: /api/v1/image/downloadstatus
 
     Get all downloading image status.
@@ -812,10 +773,6 @@ Images would be from the depots, including
         []
         
         
-
-        curl -sq -XGET "http://${QIP}:${QPORT}/api/v1/image/downloadstatus" | python -m json.tool
-
-
 .. http:delete:: /api/v1/image/(string:from)/(string:image_type)/(string:image_name)
 
     Remove image function which is only used in ``local`` image.
@@ -843,6 +800,3 @@ Images would be from the depots, including
         }
         
         
-
-        curl -sq -XDELETE 
-            "http://${QIP}:${QPORT}/api/v1/image/local/docker/lgsd/diamond" | python -m json.tool

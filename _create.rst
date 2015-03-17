@@ -11,8 +11,6 @@ Other function:
   * Container Clone
 
 
-
-
 .. http:post:: /api/v1/image/create/(string:image_repository)/(string:image_type)
 
     .. autosimple:: api.container_create
@@ -60,14 +58,6 @@ Other function:
         }
         
         
-
-        curl -sq -XPUT  http://${QIP}:${QPORT}/api/v1/container/lxc/ctest/stop -o /dev/null;
-        curl -sq -XDELETE  http://${QIP}:${QPORT}/api/v1/container/lxc/ctest -o /dev/null;
-        curl -sq -XPOST  -d
-            '{"type": "lxc", "name": "ctest", "image": "ubuntu-trusty", "tag": "latest"}'
-            http://${QIP}:${QPORT}/api/v1/image/create/appcenter/lxc
-            | python -m json.tool;
-
 **Example request of Docker**
 
     .. sourcecode:: bash
@@ -100,16 +90,6 @@ Other function:
         }
         
         
-
-        id=`curl -sq -XGET  http://${QIP}:${QPORT}/api/v1/container/docker/getid/dtest`;
-        echo $id | grep -q error || curl -sq -XPUT  http://${QIP}:${QPORT}/api/v1/container/docker/${id}/stop -o /dev/null;
-        echo $id | grep -q error || curl -sq -XDELETE  http://${QIP}:${QPORT}/api/v1/container/docker/${id} -o /dev/null;
-        curl -sq -XPOST  -d 
-            '{"type": "docker", "name": "dtest", "image": "ubuntu", "tag": "latest"}'
-            http://${QIP}:${QPORT}/api/v1/image/create/dockerhub/docker
-            | python -m json.tool;
-
-
 .. http:get:: /api/v1/image/create/
 
     Get create tasks list.
@@ -169,9 +149,6 @@ Other function:
         ]
         
         
-
-        curl -sq -XGET  http://${QIP}:${QPORT}/api/v1/image/create/ | python -m json.tool
-
     
 .. http:delete:: /api/v1/image/create/
 
@@ -192,7 +169,3 @@ Other function:
         []
         
         
-
-        curl -sq -XDELETE  http://${QIP}:${QPORT}/api/v1/image/create/ | python -m json.tool
-
-

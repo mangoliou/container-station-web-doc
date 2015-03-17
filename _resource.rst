@@ -1,7 +1,6 @@
 Resource
 ==================
 
-
 .. http:get:: /api/v1/container/(string:container_type)/(string:container_id)/all
 
     .. autosimple:: api.resource_all
@@ -41,12 +40,6 @@ Resource
         }
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"type": "lxc", "name": "utest", "image": "ubuntu-trusty", "tag": "latest"}' http://${QIP}:${QPORT}/api/v1/container  -o /dev/null; 
-        curl -sq -XGET -b cookies.txt 
-           http://${QIP}:${QPORT}/api/v1/container/lxc/utest/all
-           | python -mjson.tool
-
 Hostname
 ----------
 
@@ -87,11 +80,6 @@ Hostname
         }
         
         
-
-        curl -sq -XPUT -b cookies.txt -d 'yourhostname'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/network/hostname
-            | python -mjson.tool;
-
 Auto start
 ----------
 
@@ -152,14 +140,6 @@ Auto start
         }
         
         
-
-        curl -sq -XPUT -b cookies.txt
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/autostart/on
-            | python -mjson.tool;
-        curl -sq -XPUT -b cookies.txt
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/autostart/off
-            | python -mjson.tool;
-
 Port Forwarding
 ---------------
 
@@ -206,11 +186,6 @@ Port Forwarding
         }
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '[12345, 12345, "tcp"]' 
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/network/port
-            | python -mjson.tool;
-
 .. http:delete:: /api/v1/container/(string:container_type)/(string:container_id)/network/port
 
     Delete port forwarding.
@@ -232,11 +207,6 @@ Port Forwarding
         []
         
         
-
-        curl -sq -XDELETE -b cookies.txt -d '[12345, 12345, "tcp"]' 
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/network/port
-            | python -mjson.tool;
-
 Devices 
 --------
 
@@ -263,9 +233,6 @@ Devices
         ]
         
         
-
-        curl -sq -XGET http://${QIP}:${QPORT}/api/v1/resource/device | python -mjson.tool;
-
 .. http:post:: /api/v1/container/(string:container_type)/(string:container_id)/resource/device
 
     Add device permission.
@@ -317,11 +284,6 @@ Devices
         }
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '["allow", "Open_Sound_System_(OSS)", "rwm"]'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/device
-            | python -mjson.tool;
-
 .. http:delete:: /api/v1/container/(string:container_type)/(string:container_id)/resource/device
 
     Delete device permission.
@@ -343,11 +305,6 @@ Devices
         []
         
         
-
-        curl -sq -XDELETE -b cookies.txt -d '["allow", "Open_Sound_System_(OSS)", "rwm"]'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/device
-            | python -mjson.tool;
-
 Limit
 ----------
 
@@ -395,11 +352,6 @@ Limit
         }
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"cputime": 100, "cpuweight": 600, "memory": "512m"}'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/limit
-            | python -mjson.tool;
-
 .. http:delete:: /api/v1/container/(string:container_type)/(string:container_id)/resource/limit
 
     Delete resource limitation.
@@ -421,8 +373,3 @@ Limit
         []
         
         
-
-        curl -sq -XDELETE -b cookies.txt -d '{"cputime": 0}'
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/limit
-            | python -mjson.tool;
-

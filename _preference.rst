@@ -24,9 +24,6 @@ Preference
         }
         
         
-
-        curl -XPOST -sq -b cookies.txt -d '{"value":"I am sphinx"}' http://${QIP}:${QPORT}/api/v1/preference/doc_test | python -mjson.tool;
-
 .. http:get:: /api/v1/preference/
 
     :resjson string key-name: value
@@ -48,9 +45,6 @@ Preference
         }
         
         
-
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/preference/ | python -mjson.tool;
-
 .. http:get:: /api/v1/preference/(string:key)
 
     :resjson string key-name: value
@@ -70,9 +64,6 @@ Preference
         }
         
         
-
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/preference/doc_test | python -mjson.tool;
-
 .. http:put:: /api/v1/preference/(string:key)
 
     :reqjson string value: set the value of key
@@ -99,10 +90,6 @@ Preference
         }
         
         
-
-        curl -XPUT -sq -b cookies.txt -d '{"value":"I am container station"}' http://${QIP}:${QPORT}/api/v1/preference/doc_test | python -mjson.tool;
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/preference/doc_test | python -mjson.tool;
-
 .. http:delete:: /api/v1/preference/(string:key)
 
     **Example request**
@@ -118,10 +105,6 @@ Preference
         {}
         
         
-
-        curl -XDELETE -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/preference/doc_test | python -mjson.tool;
-
-
 Special preference settings
 ---------------------------
 

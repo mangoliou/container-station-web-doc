@@ -1,7 +1,6 @@
 Container
 =============
 
-
 .. http:post:: /api/v1/container
 
     .. autosimple:: api.container_create
@@ -131,68 +130,6 @@ Container
         }
         
         
-
-        curl -sq -XPOST  -d '{"description":"Fast, free and incredibly easy to use, the Ubuntu operating system powers millions of desktop PCs, laptops and servers around the world."}' http://${QIP}:${QPORT}/api/v1/image/appcenter/lxc/ubuntu-trusty/latest/download -o /dev/null; 
-        while :; do curl -sq -XGET "http://${QIP}:${QPORT}/api/v1/image/downloadstatus" | python -c "import json, sys; sys.exit(len(json.loads(sys.stdin.read())))"; 
-            if [ "$?" -eq "0" ]; then 
-                break; 
-            fi; 
-            sleep 5; 
-        done; 
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/stop -o /dev/null; 
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest -o /dev/null;
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "type": "lxc",
-                "name": "utest",
-                "image": "ubuntu-trusty",
-                "tag": "latest",
-                "autostart": true,
-                "network": {
-                    "hostname": "CustomHostName",
-                    "port": [
-                        [
-                            12345,
-                            1234,
-                            "udp"
-                        ]
-                    ]
-                },
-                "resource": {
-                    "device": [
-                        [
-                            "allow",
-                            "Open_Sound_System_(OSS)",
-                            "rw"
-                        ]
-                    ],
-                    "limit": {
-                        "cputime": 512,
-                        "cpuweight": 512,
-                        "memory": "768m"
-                    }
-                },
-                "volume": {
-                    "host": {
-                        "/test": {
-                            "bind": "/mnt/vol1",
-                            "ro": true
-                        },
-                        "/test/image": {
-                            "bind": "/mnt/vol2",
-                            "ro": false
-                        }
-                    }
-                }
-            }' http://${QIP}:${QPORT}/api/v1/container
-            | python -m json.tool;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/stop -o /dev/null;
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest -o /dev/null;
-        curl -sq -XPOST -b cookies.txt -d
-            '{"type": "lxc", "name": "utest", "image": "ubuntu-trusty", "tag": "latest"}'
-            http://${QIP}:${QPORT}/api/v1/container
-            | python -m json.tool;
-
 **Example request of Docker**
 
     .. sourcecode:: bash
@@ -261,61 +198,6 @@ Container
         }
         
         
-
-        id=`curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/getid/DockerTestAPI`;
-        echo $id | grep -q error || curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id}/stop -o /dev/null;
-        echo $id | grep -q error || curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id} -o /dev/null;
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "type": "docker",
-                "name": "DockerTestAPI",
-                "image": "ubuntu",
-                "tag": "latest",
-                "autostart": false,
-                "entrypoint": "cat",
-                "command": "/etc/passwd",
-                "environment": [
-                    "QPORT=90", 
-                    "QIP=1.2.3.4"
-                ],
-                "network": {
-                    "hostname": "CustomHostName",
-                    "port": [
-                        [
-                            12345,
-                            1234,
-                            "udp"
-                        ]
-                    ]
-                },
-                "resource": {
-                    "limit": {
-                        "cputime": 512,
-                        "cpuweight": 512,
-                        "memory": "768"
-                    }
-                },
-                "volume": {
-                    "host": {
-                        "/test": {
-                            "bind": "/mnt/vol1",
-                            "ro": true
-                        },
-                        "/test/image": {
-                            "bind": "mnt/vol2",
-                            "ro": false
-                        }
-                    }
-                }
-            }' http://${QIP}:${QPORT}/api/v1/container
-            | python -m json.tool;
-        id=`curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/getid/DockerTestAPI2`;
-        echo $id | grep -q error || curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id}/stop -o /dev/null;
-        echo $id | grep -q error || curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id} -o /dev/null;
-        curl -sq -XPOST -b cookies.txt -d 
-            '{"type": "docker", "name": "DockerTestAPI2", "image": "ubuntu", "tag": "latest"}'
-            http://${QIP}:${QPORT}/api/v1/container
-            | python -m json.tool;
     
 .. http:get:: /api/v1/container
 
@@ -502,12 +384,6 @@ Container
         ]
         
         
-
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/start -o /dev/null;
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/event/wait/lxc/utest/running?duration=20 -o /dev/null;
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container | python -mjson.tool
-
-
 .. http:get:: /api/v1/container/(string:container_type)/(string:container_id)/inspect
 
     .. autosimple:: api.container_inspect
@@ -650,10 +526,6 @@ Container
         }
         
         
-
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/DockerTestAPI/inspect | python -mjson.tool
-
-
 .. http:get:: /api/v1/container/(string:container_type)/(string:container_id)/logs
 
     .. autosimple:: api.container_logs
@@ -682,10 +554,6 @@ Container
         }
         
         
-
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/DockerTestAPI/logs | python -mjson.tool
-
-
 .. http:put:: /api/v1/container/(string:container_type)/(string:container_id)/start
 
     .. autosimple:: api.container_start
@@ -711,10 +579,6 @@ Container
         }
         
         
-
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/stop -o /dev/null;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/start | python -mjson.tool
-
     **Example request of Docker**
 
     .. sourcecode:: bash
@@ -740,12 +604,6 @@ Container
         }
         
         
-
-        id=`curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/getid/DockerTestAPI` ;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id}/stop -o /dev/null;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id}/start | python -mjson.tool
-
-
 .. http:put:: /api/v1/container/(string:container_type)/(string:container_id)/restart
 
     .. autosimple:: api.container_restart
@@ -771,9 +629,6 @@ Container
         }
         
         
-
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/restart | python -mjson.tool
-
     **Example request of Docker**
 
     .. sourcecode:: bash
@@ -799,11 +654,6 @@ Container
         }
         
         
-
-        id=`curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/getid/DockerTestAPI` ;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id}/restart | python -mjson.tool
-
-
 .. http:get:: /api/v1/container/(string:container_type)/(string:container_id)
 
     .. autosimple:: api.container_get
@@ -846,11 +696,6 @@ Container
         }
         
         
-
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/event/wait/lxc/utest/running?duration=20 -o /dev/null;
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest | python -mjson.tool
-
-
 .. http:put:: /api/v1/container/(string:container_type)/(string:container_id)/stop
 
     .. autosimple:: api.container_stop
@@ -883,9 +728,6 @@ Container
         }
         
         
-
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/stop | python -mjson.tool
-
     **Example request of Docker**
 
     .. sourcecode:: bash
@@ -906,11 +748,6 @@ Container
         }
         
         
-
-        id=`curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/getid/DockerTestAPI` ;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id}/stop | python -mjson.tool
-
-
 .. http:delete:: /api/v1/container/(string:container_type)/(string:container_id)
 
     .. autosimple:: api.container_destroy
@@ -930,9 +767,6 @@ Container
         {}
         
         
-
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest | python -mjson.tool
-
     **Example request of Docker**
 
     .. sourcecode:: bash
@@ -947,7 +781,3 @@ Container
         {}
         
         
-
-        id=`curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/getid/DockerTestAPI2` ;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id}/stop -o /dev/null;
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/docker/${id} | python -mjson.tool;

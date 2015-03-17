@@ -69,11 +69,6 @@ Log
         ]
         
         
-
-        (echo "import log.log as ctlog\nctlog.info('Hello container station', 'TestUser1', 'container')\nctlog.warn('Hello container station', 'TestUser2', 'container')\nctlog.error('Hello container station', 'TestUser3', 'container')" | sudo VIRTUAL_ENV=$VIRTUAL_ENV PATH=$PATH python -);
-        http_proxy= curl -sq -XGET -b cookies.txt "http://${QIP}:${QPORT}/api/v1/log?limit=5" | python -mjson.tool
-
-
 .. http:get:: /api/v1/log/export
 
     Export logs to csv format.
@@ -132,9 +127,6 @@ Log
         ]
         
         
-
-        http_proxy= curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/log/export
-
 Event
 ------------------
 
@@ -220,10 +212,6 @@ Event
         }
         
         
-
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/event | python -mjson.tool
-
-
 .. http:get:: /api/v1/event/wait/(string:container_type)/(string:container_id)/(string:state)
 
     :param container_type: ``lxc``, ``docker``
@@ -257,6 +245,3 @@ Event
         }
         
         
-
-        curl -sq -XPOST -b cookies.txt -d '{"type": "lxc", "name": "utest", "image": "ubuntu-trusty", "tag": "latest"}' http://${QIP}:${QPORT}/api/v1/container  -o /dev/null; 
-        curl -sq -XGET -b cookies.txt "http://${QIP}:${QPORT}/api/v1/event/wait/lxc/utest/stopped?duration=5" | python -mjson.tool

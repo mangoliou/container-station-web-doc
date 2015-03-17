@@ -42,7 +42,7 @@ def trimming(name):
 		for line in f:
 			
 			if keep_deleting:
-				if count_starting_blank(line) > blank_number:
+				if count_starting_blank(line) > blank_number or line.startswith('\n'):
 					pass
 				else:
 					keep_deleting = False

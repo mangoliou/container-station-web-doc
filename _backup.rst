@@ -77,16 +77,6 @@ Targets
         }
         
         
-
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "name": "testsite",
-                "ipaddr": "127.0.0.1:5000",
-                "username": "admin",
-                "password": "admin",
-                "base": "/"
-            }' http://${QIP}:${QPORT}/api/v1/target/ | python -mjson.tool | tee tmp-target.txt
-
 .. http:get:: /api/v1/target/
 
     List remote targets
@@ -116,9 +106,6 @@ Targets
         ]
         
         
-
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/target/ | python -mjson.tool
-
 .. http:get:: /api/v1/target/(int:id)/dirs/(string:path)
 
     List folder of target and backup records
@@ -141,9 +128,6 @@ Targets
         }
         
         
-
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/target/1/dirs/ | python -mjson.tool
-
 .. http:get:: /api/v1/target/local/dirs/(string:path)
 
     List **local** folder of target and backup records
@@ -168,10 +152,6 @@ Targets
         ]
         
         
-
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/target/local/dirs/ | python -mjson.tool
-
-
 .. http:get:: /api/v1/target/(int:id)
 
     Get a remote target
@@ -205,10 +185,6 @@ Targets
         }
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-target.txt').read())['id'];"`;
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/target/${TID} | python -mjson.tool
-
 .. http:get:: /api/v1/target/(int:id)/ping
 
     Test connection of remote target
@@ -228,10 +204,6 @@ Targets
         {"alive": true}
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-target.txt').read())['id'];"`;
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/target/${TID}/ping
-
 .. http:put:: /api/v1/target/(int:id)
 
     Modify a remote target
@@ -262,13 +234,6 @@ Targets
         }
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-target.txt').read())['id'];"`;
-        curl -sq -XPUT -b cookies.txt -d
-            '{
-                "desc": "Hello World"
-            }' http://${QIP}:${QPORT}/api/v1/target/${TID} | python -mjson.tool
-
 .. http:delete:: /api/v1/target/(int:id)
 
     Delete a remote target
@@ -288,12 +253,6 @@ Targets
         [1]
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-target.txt').read())['id'];"`;
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/target/${TID};
-        rm tmp-target.txt
-
-
 Backup
 ---------------------
 
@@ -380,63 +339,6 @@ Backup
         }
         
         
-
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest -o /dev/null;
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "type": "lxc",
-                "name": "utest",
-                "image": "ubuntu-trusty",
-                "tag": "latest",
-                "autostart": true,
-                "network": {
-                    "hostname": "CustomHostName",
-                    "port": [
-                        [
-                            12345,
-                            1234,
-                            "udp"
-                        ]
-                    ]
-                },
-                "resource": {
-                    "device": [
-                        [
-                            "allow",
-                            "Open_Sound_System_(OSS)",
-                            "rw"
-                        ]
-                    ],
-                    "limit": {
-                        "cputime": 512,
-                        "cpuweight": 512,
-                        "memory": "768m"
-                    }
-                },
-                "volume": {
-                    "host": {
-                        "/test": {
-                            "bind": "/mnt/vol1",
-                            "ro": true
-                        },
-                        "/test/image": {
-                            "bind": "/mnt/vol2",
-                            "ro": false
-                        }
-                    }
-                }
-            }' http://${QIP}:${QPORT}/api/v1/container
-            -o /dev/null;
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "job_name": "LocalJob",
-                "container_id": "utest",
-                "type": "lxc",
-                "dest": {"target": "local", "path": "/test/backup"},
-                "at": {"repeat": "daily", "start": 60},
-                "retention": 3
-            }' http://${QIP}:${QPORT}/api/v1/backup/ | tee tmp-backup-1.txt | python -mjson.tool
-
     Network backup
 
     **Example request**
@@ -484,17 +386,6 @@ Backup
         }
         
         
-
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "job_name": "RemoteJob",
-                "container_id": "utest",
-                "type": "lxc",
-                "dest": {"target": "remote", "profile": 1, "path": "/test/backup"},
-                "at": {"repeat": "daily", "times": 2, "start": 60},
-                "features": ["compress"]
-            }' http://${QIP}:${QPORT}/api/v1/backup/ | tee tmp-backup-2.txt | python -mjson.tool
-
 .. http:get:: /api/v1/backup/
 
     **Example request**
@@ -557,10 +448,6 @@ Backup
         ]
         
         
-
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/ | python -mjson.tool
-
-
 .. http:get:: /api/v1/backup/(int:id)
 
     Get a backup schedule
@@ -598,11 +485,6 @@ Backup
         }
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-backup-1.txt').read())['id'];"`;
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/${TID} | python -mjson.tool
-
-
 .. http:put:: /api/v1/backup/(int:id)/run
 
     Run a backup schedule immediately
@@ -640,11 +522,6 @@ Backup
         }
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-backup-1.txt').read())['id'];"`;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/${TID}/run | python -mjson.tool
-
-
 .. http:put:: /api/v1/backup/(int:id)/stop
 
     Stop a backup schedule immediately
@@ -684,11 +561,6 @@ Backup
         }
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-backup-1.txt').read())['id'];"`;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/${TID}/stop | python -mjson.tool
-
-
 .. http:put:: /api/v1/backup/(int:id)
 
     Modify a backup schedule
@@ -731,13 +603,6 @@ Backup
         }
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-backup-1.txt').read())['id'];"`;
-        curl -sq -XPUT -b cookies.txt -d
-            '{
-                "disable": true
-            }' http://${QIP}:${QPORT}/api/v1/backup/${TID} | python -mjson.tool
-
 .. http:delete:: /api/v1/backup/(int:id)
 
     Delete a backup task, which the task state must be ``init``, ``scheduled``, ``completed``
@@ -757,14 +622,6 @@ Backup
         ]
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-backup-1.txt').read())['id'];"`;
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/${TID} | python -mjson.tool;
-        TID=`python -c "import json;print json.loads(open('tmp-backup-2.txt').read())['id'];"`;
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/${TID} >/dev/null;
-        rm -f tmp-backup-1.txt tmp-backup-2.txt
-
-
 Restore
 ---------------------
 
@@ -820,16 +677,6 @@ Restore
         }
         
         
-
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "job_name": "RestoreLocalJob",
-                "container_id": "utest",
-                "type": "lxc",
-                "src": {"target": "local", "path": "/test/backup", "portfolio": "1"}
-            }' http://${QIP}:${QPORT}/api/v1/restore/ | tee tmp-restore-1.txt | python -mjson.tool
-
-
 .. http:get:: /api/v1/restore/
 
     **Example request**
@@ -862,10 +709,6 @@ Restore
         ]
         
         
-
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/restore/ | python -mjson.tool
-
-
 .. http:get:: /api/v1/restore/(int:id)
 
     Get a restore schedule
@@ -898,11 +741,6 @@ Restore
         }
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-restore-1.txt').read())['id'];"`;
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/restore/${TID} | python -mjson.tool
-
-
 .. http:put:: /api/v1/restore/(int:id)/stop
 
     Stop a restore task immediately
@@ -935,12 +773,6 @@ Restore
         }
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-restore-1.txt').read())['id'];"`;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/restore/${TID}/stop | python -mjson.tool
-
-
-
 .. http:delete:: /api/v1/restore/(int:id)
 
     Delete a restore task, which the task state must be ``init``, ``scheduled``, ``completed``
@@ -962,13 +794,6 @@ Restore
         ]
         
         
-
-        TID=`python -c "import json;print json.loads(open('tmp-restore-1.txt').read())['id'];"`;
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/restore/${TID} | python -mjson.tool;
-        rm -f tmp-restore-1.txt
-
-
-
 Progress Changed
 ----------------------
 
@@ -993,23 +818,3 @@ Progress Changed
         []
         
         
-
-        curl -sq -XPOST -b cookies.txt -d
-            '{
-                "job_name": "LocalJob",
-                "container_id": "utest",
-                "type": "lxc",
-                "dest": {"target": "local", "path": "/test/backup"},
-                "at": {"repeat": "daily", "start": 60},
-                "retention": 3
-            }' http://${QIP}:${QPORT}/api/v1/backup/ | tee tmp-backup-1.txt > /dev/null;
-        TID=`python -c "import json;print json.loads(open('tmp-backup-1.txt').read())['id'];"`;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/${TID}/run -o /dev/null;
-        sleep 2;
-        curl -sq -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/progress | python -mjson.tool;
-        curl -sq -XPUT -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/${TID}/stop -o /dev/null;
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/backup/${TID} -o /dev/null;
-        curl -sq -XDELETE -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest -o /dev/null;
-        rm -f tmp-backup-1.txt tmp-backup-2.txt;
-
-

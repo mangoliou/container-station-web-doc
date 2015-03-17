@@ -81,7 +81,7 @@ def trimming(name):
 	# write result to new file
 	with open('_' + name, 'w') as f:
 		
-		# replace RUNCODE tag with json 
+		# replace RUNCODE tag with json and text
 		json_block_id = 0
 		text_block_id = 0
 		for i, line in enumerate(trim_file):
@@ -106,4 +106,3 @@ if __name__ == '__main__':
 
 	for f in rst_files:
 		trimming(f)
-	#trimming('import.rst')

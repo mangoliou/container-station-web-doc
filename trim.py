@@ -26,6 +26,28 @@ def count_starting_blank(string):
 		if ch != ' ':
 			return i 
 
+def triming_index():
+
+	trim_file = []
+	keep_deleting = False
+	with open('index.rst', 'r') as f:
+		for line in f:
+			if keep_deleting:
+				if count_starting_blank(line) > 0 or line.startswith('\n'):
+					pass
+				else:
+					trim_file.append(line)
+					keep_deleting = False
+			else:
+				if '.. exec::' in line:
+					keep_deleting = True
+				else:
+					trim_file.append(line)
+
+	with open('index.rst', 'w') as f:
+		for line in trim_file:
+			f.write(line)
+
 def trimming(name):
 
 	""" Trim the ..automodule and ..runcode blocks and parse json response."""
@@ -104,5 +126,9 @@ def trimming(name):
 
 if __name__ == '__main__':
 
+	#trim index.rst
+	triming_index()
+
+	# trim .rst
 	for f in rst_files:
 		trimming(f)

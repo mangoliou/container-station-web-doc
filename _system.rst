@@ -20,6 +20,16 @@ Authentication
 
     **Example response**
 
+    .. sourcecode:: json
+
+        {
+            "anonymous": false,
+            "isAdmin": false,
+            "logintime": "2015-03-16 17:29:52",
+            "username": "nobody"
+        }
+        
+        
 .. http:get:: /api/v1/login_refresh
 
     .. autosimple:: api.login_refresh
@@ -35,6 +45,16 @@ Authentication
 
     **Example response**
 
+    .. sourcecode:: json
+
+        {
+            "anonymous": false,
+            "isAdmin": false,
+            "logintime": "2015-03-16 17:29:52",
+            "username": "nobody"
+        }
+        
+        
 .. http:put:: /api/v1/logout
 
     .. autosimple:: api.logout
@@ -49,6 +69,13 @@ Authentication
 
     **Example response**
 
+    .. sourcecode:: json
+
+        {
+            "username": "nobody"
+        }
+        
+        
 System Information
 ------------------
 
@@ -72,6 +99,22 @@ System Information
 
     **Example response**
 
+    .. sourcecode:: json
+
+        {
+            "cpu_core": 2,
+            "cpu_thread": 2,
+            "hostname": "vagrant-ubuntu-trusty-64",
+            "machine": "amd64",
+            "processor": "Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz",
+            "version": {
+                "docker_version": "1.5.0",
+                "lxc_version": "1.0.7",
+                "web": "unknown"
+            }
+        }
+        
+        
 .. http:get:: /api/v1/system/resource
 
     .. autosimple:: api.system_resource_info
@@ -87,6 +130,22 @@ System Information
 
     **Example response**
 
+    .. sourcecode:: json
+
+        {
+            "cpu_usage": "0.0",
+            "memory_usage": {
+                "buffers": 102,
+                "cached": 1578,
+                "percent": 17,
+                "percent_buffers": 2,
+                "percent_cached": 39,
+                "total": 3953,
+                "used": 697
+            }
+        }
+        
+        
 System Port 
 ------------------
 
@@ -105,3 +164,13 @@ System Port
 
     **Example response**
 
+    .. sourcecode:: json
+
+        {
+            "used": true
+        }
+        {
+            "used": false
+        }
+        
+        

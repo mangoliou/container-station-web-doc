@@ -1,5 +1,6 @@
 # python lib
 from __future__ import absolute_import, division, print_function, with_statement
+import argparse
 import os
 import urllib2
 
@@ -7,17 +8,40 @@ import urllib2
 from bs4 import BeautifulSoup
 
 site = 'http://qnap.dorowu.com/gitlab/uploads/dorowu/cs-web-auto/'
+mask_files = []
 rst_files = []
 
 
 def count_starting_blank(string):
 	
+	"""Count the Heading blanks."""
+
 	for i, ch in enumerate(string):
 		if ch != ' ':
 			return i 
 
+def mask():
+
+	"""Add ignored files to mask."""
+	
+	parser = argparse.ArgumentParser(description='Get mask files')
+	parser.add_argument('--mask', action="store", dest="mask_files")
+	results = parser.parse_args()
+	
+	if results.mask_files:
+		mask_files.extend(results.mask_files.split(','))
+
+	for f in mask_files:
+		if os.path.isfile(f + '.rst'):
+			os.remove(f + '.rst') 
+
+	#log
+	print("Mask Files", mask_files)
+
 
 def triming_conf():
+
+	"""Trim the conf.py."""
 
 	delete_keywords = ['sphinx_rtd_theme', 'sys.path.insert', 'runcode']
 
@@ -36,6 +60,8 @@ def triming_conf():
 
 
 def triming_index():
+
+	"""Trim the index.rst file."""
 
 	trim_file = []
 	
@@ -60,27 +86,37 @@ def triming_index():
 	for i, line in enumerate(trim_file):
 
 		if rst_flag:
-
 			if line.startswith('\n') or line.startswith(' '):
 				if line!='\n':
-					rst_files.append(line.strip() + '.rst')
+					if line.strip() not in mask_files:
+						rst_files.append(line.strip() + '.rst')
+					else:
+						trim_file[i] = ''
 			else:
 				rst_flag = False
 
 		if 'maxdepth'in line:
 			rst_flag = True
 
-	print (rst_files)
 	with open('index.rst', 'w') as f:
 		for line in trim_file:
 			f.write(line)
 
+	#log
+	print("Trimming Files", rst_files)
+	
+
 def gen_dev():
 
+	"""
+	Generate the 'rtd-requirements.txt' for readthedoc.org's 
+	advanced setting.
+	"""
+	
 	with open('rtd-requirements.txt', 'w') as f:
 		f.write('sphinxcontrib-httpdomain==1.3.0')
 
-def trimming(name):
+def trimming_rest_rst(name):
 
 	""" Trim the ..automodule and ..runcode blocks and parse json response."""
 
@@ -158,6 +194,9 @@ def trimming(name):
 
 if __name__ == '__main__':
 
+	# mask and delete file
+	mask()
+
 	#trim conf.py
 	triming_conf()
 
@@ -169,4 +208,4 @@ if __name__ == '__main__':
 
 	# trim rest .rst
 	for f in rst_files:
-		trimming(f)
+		trimming_rest_rst(f)

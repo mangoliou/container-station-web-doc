@@ -16,15 +16,11 @@ Content
 
     system
     container
-    create
-    compose
     resource
     image
     import
-    backup
     log
     preference
-    draft
 
 
 * :ref:`genindex`

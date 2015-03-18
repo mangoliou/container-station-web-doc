@@ -52,24 +52,6 @@ Images would be from the depots, including
                     "is_latest": [
                         "latest"
                     ],
-                    "name": "lgsd/diamond",
-                    "size": [
-                        1211189
-                    ],
-                    "tags": [
-                        "latest"
-                    ],
-                    "type": "docker"
-                },
-                {
-                    "description": "",
-                    "downloading": false,
-                    "from": "local",
-                    "icon": "",
-                    "installed": true,
-                    "is_latest": [
-                        "latest"
-                    ],
                     "name": "qnap.dorowu.com/busybox",
                     "size": [
                         2433303
@@ -138,7 +120,7 @@ Images would be from the depots, including
                     "type": "docker"
                 }
             ],
-            "total_count": 6,
+            "total_count": 5,
             "type": ""
         }
         
@@ -770,7 +752,13 @@ Images would be from the depots, including
 
     .. sourcecode:: json
 
-        []
+        [
+            {
+                "name": "lgsd/diamond",
+                "percent": null,
+                "status": "downloading"
+            }
+        ]
         
         
 .. http:delete:: /api/v1/image/(string:from)/(string:image_type)/(string:image_name)
@@ -793,10 +781,10 @@ Images would be from the depots, including
     .. sourcecode:: json
 
         {
-            "action": "delete",
-            "name": "lgsd/diamond",
-            "state": "success",
-            "type": "docker"
+            "error": {
+                "code": 404,
+                "message": "Image not found: lgsd/diamond"
+            }
         }
         
         

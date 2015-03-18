@@ -25,7 +25,7 @@ Authentication
         {
             "anonymous": false,
             "isAdmin": false,
-            "logintime": "2015-03-16 17:29:52",
+            "logintime": "2015-03-17 17:30:27",
             "username": "nobody"
         }
         
@@ -50,7 +50,7 @@ Authentication
         {
             "anonymous": false,
             "isAdmin": false,
-            "logintime": "2015-03-16 17:29:52",
+            "logintime": "2015-03-17 17:30:27",
             "username": "nobody"
         }
         
@@ -133,13 +133,13 @@ System Information
     .. sourcecode:: json
 
         {
-            "cpu_usage": "0.0",
+            "cpu_usage": "15.0",
             "memory_usage": {
                 "buffers": 102,
-                "cached": 1578,
+                "cached": 1582,
                 "percent": 17,
                 "percent_buffers": 2,
-                "percent_cached": 39,
+                "percent_cached": 40,
                 "total": 3953,
                 "used": 697
             }

@@ -187,12 +187,12 @@ Container
     .. sourcecode:: json
 
         {
-            "id": "397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c",
+            "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
             "name": "DockerTestAPI",
             "type": "docker"
         }
         {
-            "id": "978cf996929085ace6c8d9068483ca44579a4f3c2afed7bc46ca1e7bfd82a4cb",
+            "id": "0298a0baef28c3f3c6b41205b5ec36d35f54ed47407f797204bace90c50bb4b4",
             "name": "DockerTestAPI2",
             "type": "docker"
         }
@@ -225,15 +225,17 @@ Container
                 "type": "lxc"
             },
             {
-                "cpu": 0.01555023923444976,
+                "cpu": 0.12590999338186631,
                 "id": "utest",
                 "image": "ubuntu-trusty:latest",
-                "ipaddress": [],
-                "memory": 7192576,
+                "ipaddress": [
+                    "10.0.3.154"
+                ],
+                "memory": 11829248,
                 "name": "utest",
-                "rx": 1018,
+                "rx": 1154,
                 "state": "running",
-                "tx": 1024,
+                "tx": 622,
                 "type": "lxc"
             },
             {
@@ -244,7 +246,7 @@ Container
                 "type": "lxc"
             },
             {
-                "id": "397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c",
+                "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
                 "image": "ubuntu:latest",
                 "name": "DockerTestAPI",
                 "state": "stopped",
@@ -252,10 +254,10 @@ Container
             },
             {
                 "cpu": 0.0,
-                "id": "978cf996929085ace6c8d9068483ca44579a4f3c2afed7bc46ca1e7bfd82a4cb",
+                "id": "0298a0baef28c3f3c6b41205b5ec36d35f54ed47407f797204bace90c50bb4b4",
                 "image": "ubuntu:latest",
                 "ipaddress": [],
-                "memory": 798720,
+                "memory": 4677632,
                 "name": "DockerTestAPI2",
                 "rx": 0,
                 "state": "running",
@@ -284,7 +286,7 @@ Container
                 "type": "docker"
             },
             {
-                "id": "b6112ba86c287a72cb88ffd93da803c37d0af8384b2298dc80cb003c24d9c432",
+                "id": "f3ba3b9a079f22268a01ab85047927fc625bdad631ef87d9cc2953fa4361813a",
                 "image": "ubuntu:latest",
                 "name": "dtest",
                 "state": "stopped",
@@ -441,7 +443,7 @@ Container
                 "Volumes": null,
                 "WorkingDir": ""
             },
-            "Created": "2015-03-16T17:28:22.035878126Z",
+            "Created": "2015-03-17T17:28:51.569306978Z",
             "Driver": "devicemapper",
             "ExecDriver": "native-0.2",
             "ExecIDs": null,
@@ -480,9 +482,9 @@ Container
                 "SecurityOpt": null,
                 "VolumesFrom": null
             },
-            "HostnamePath": "/var/lib/docker/containers/397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c/hostname",
-            "HostsPath": "/var/lib/docker/containers/397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c/hosts",
-            "Id": "397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c",
+            "HostnamePath": "/var/lib/docker/containers/08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765/hostname",
+            "HostsPath": "/var/lib/docker/containers/08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765/hosts",
+            "Id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
             "Image": "2d24f826cb16146e2016ff349a8a33ed5830f3b938d45c0f82943f4ab8c097e7",
             "MountLabel": "",
             "Name": "/DockerTestAPI",
@@ -502,18 +504,18 @@ Container
             },
             "Path": "cat",
             "ProcessLabel": "",
-            "ResolvConfPath": "/var/lib/docker/containers/397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c/resolv.conf",
+            "ResolvConfPath": "/var/lib/docker/containers/08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765/resolv.conf",
             "RestartCount": 0,
             "State": {
                 "Error": "",
                 "ExitCode": 0,
-                "FinishedAt": "2015-03-16T17:28:22.522010385Z",
+                "FinishedAt": "2015-03-17T17:28:52.158493073Z",
                 "OOMKilled": false,
                 "Paused": false,
                 "Pid": 0,
                 "Restarting": false,
                 "Running": false,
-                "StartedAt": "2015-03-16T17:28:22.446804595Z"
+                "StartedAt": "2015-03-17T17:28:52.075450136Z"
             },
             "Volumes": {
                 "/mnt/vol1": "/home/vagrant/container-station-web/test",
@@ -592,7 +594,7 @@ Container
 
         {
             "cpu": 0.0,
-            "id": "397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c",
+            "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
             "image": "ubuntu:latest",
             "ipaddress": [],
             "memory": 0,
@@ -641,15 +643,10 @@ Container
     .. sourcecode:: json
 
         {
-            "cpu": 0.0,
-            "id": "397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c",
+            "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
             "image": "ubuntu:latest",
-            "ipaddress": [],
-            "memory": 0,
             "name": "DockerTestAPI",
-            "rx": 0,
-            "state": "running",
-            "tx": 0,
+            "state": "stopped",
             "type": "docker"
         }
         
@@ -687,7 +684,7 @@ Container
             "id": "utest",
             "image": "ubuntu-trusty:latest",
             "ipaddress": [],
-            "memory": 2232320,
+            "memory": 2097152,
             "name": "utest",
             "rx": 0,
             "state": "running",
@@ -717,11 +714,11 @@ Container
             "id": "utest",
             "image": "ubuntu-trusty:latest",
             "ipaddress": [
-                "10.0.3.82"
+                "10.0.3.154"
             ],
-            "memory": 9932800,
+            "memory": 10637312,
             "name": "utest",
-            "rx": 90,
+            "rx": 70,
             "state": "running",
             "tx": 90,
             "type": "lxc"
@@ -740,7 +737,7 @@ Container
     .. sourcecode:: json
 
         {
-            "id": "397568fb6bde77cd7cb98930b5400497aeca1ce3e91ef1d51f475723e8b9f65c",
+            "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
             "image": "ubuntu:latest",
             "name": "DockerTestAPI",
             "state": "stopped",

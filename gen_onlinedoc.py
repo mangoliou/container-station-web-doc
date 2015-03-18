@@ -9,11 +9,13 @@ from bs4 import BeautifulSoup
 site = 'http://qnap.dorowu.com/gitlab/uploads/dorowu/cs-web-auto/'
 rst_files = []
 
+
 def count_starting_blank(string):
 	
 	for i, ch in enumerate(string):
 		if ch != ' ':
 			return i 
+
 
 def triming_conf():
 
@@ -35,7 +37,6 @@ def triming_conf():
 
 def triming_index():
 
-	
 	trim_file = []
 	
 	# delete .. exec::
@@ -166,6 +167,6 @@ if __name__ == '__main__':
 	# generate dev files
 	gen_dev()
 
-	# trim .rst
+	# trim rest .rst
 	for f in rst_files:
 		trimming(f)

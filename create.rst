@@ -49,7 +49,7 @@ Other function:
             "from": "appcenter",
             "id": 1,
             "image": "ubuntu-trusty",
-            "init": 1426526921,
+            "init": 1426613350,
             "name": "ctest",
             "state": "waiting",
             "tag": "latest",
@@ -81,7 +81,7 @@ Other function:
             "from": "dockerhub",
             "id": 2,
             "image": "ubuntu",
-            "init": 1426526922,
+            "init": 1426613354,
             "name": "dtest",
             "state": "waiting",
             "tag": "latest",
@@ -121,27 +121,30 @@ Other function:
         [
             {
                 "create_params": "{u'image': u'ubuntu', u'tag': u'latest', u'type': u'docker', u'name': u'dtest'}",
-                "detail_state": "",
+                "detail_state": "creating",
                 "from": "dockerhub",
                 "id": 2,
                 "image": "ubuntu",
-                "init": 1426526922,
+                "init": 1426613354,
                 "name": "dtest",
-                "state": "waiting",
+                "start": 1426613354,
+                "state": "running",
                 "tag": "latest",
                 "type": "docker",
                 "user": "Anonymous"
             },
             {
                 "create_params": "{u'image': u'ubuntu-trusty', u'tag': u'latest', u'type': u'lxc', u'name': u'ctest'}",
-                "detail_state": "creating",
+                "detail_state": "",
+                "end": 1426613354,
                 "from": "appcenter",
                 "id": 1,
                 "image": "ubuntu-trusty",
-                "init": 1426526921,
+                "init": 1426613350,
                 "name": "ctest",
-                "start": 1426526921,
-                "state": "running",
+                "result": 0,
+                "start": 1426613350,
+                "state": "completed",
                 "tag": "latest",
                 "type": "lxc",
                 "user": "Anonymous"
@@ -166,6 +169,8 @@ Other function:
 
     .. sourcecode:: json
 
-        []
+        [
+            1
+        ]
         
         

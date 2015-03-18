@@ -333,7 +333,7 @@ Backup
             "retention": 3,
             "state": {
                 "code": "init",
-                "next_run": "2015-03-17 01:00:00"
+                "next_run": "2015-03-18 01:00:00"
             },
             "type": "lxc"
         }
@@ -380,7 +380,7 @@ Backup
             "retention": 0,
             "state": {
                 "code": "init",
-                "next_run": "2015-03-17 01:00:00"
+                "next_run": "2015-03-18 01:00:00"
             },
             "type": "lxc"
         }
@@ -416,7 +416,7 @@ Backup
                 "retention": 3,
                 "state": {
                     "code": "scheduled",
-                    "next_run": "2015-03-17 01:00:00"
+                    "next_run": "2015-03-18 01:00:00"
                 },
                 "type": "lxc"
             },
@@ -441,7 +441,7 @@ Backup
                 "retention": 0,
                 "state": {
                     "code": "scheduled",
-                    "next_run": "2015-03-17 01:00:00"
+                    "next_run": "2015-03-18 01:00:00"
                 },
                 "type": "lxc"
             }
@@ -479,7 +479,7 @@ Backup
             "retention": 3,
             "state": {
                 "code": "scheduled",
-                "next_run": "2015-03-17 01:00:00"
+                "next_run": "2015-03-18 01:00:00"
             },
             "type": "lxc"
         }
@@ -516,7 +516,7 @@ Backup
             "retention": 3,
             "state": {
                 "code": "scheduled",
-                "next_run": "2015-03-17 01:00:00"
+                "next_run": "2015-03-18 01:00:00"
             },
             "type": "lxc"
         }
@@ -553,9 +553,8 @@ Backup
             "retention": 3,
             "state": {
                 "code": "scheduled",
-                "last_run": "2015-03-16 17:26:45",
-                "next_run": "2015-03-17 01:00:00",
-                "result": 0
+                "last_run": "2015-03-17 17:27:06",
+                "next_run": "2015-03-18 01:00:00"
             },
             "type": "lxc"
         }
@@ -595,9 +594,9 @@ Backup
             "retention": 3,
             "state": {
                 "code": "scheduled",
-                "last_run": "2015-03-16 17:26:45",
-                "next_run": "2015-03-17 01:00:00",
-                "result": 0
+                "last_run": "2015-03-17 17:27:06",
+                "next_run": "2015-03-18 01:00:00",
+                "result": -2
             },
             "type": "lxc"
         }
@@ -701,7 +700,7 @@ Restore
                 },
                 "state": {
                     "code": "completed",
-                    "last_run": "2015-03-16 17:26:46",
+                    "last_run": "2015-03-17 17:27:07",
                     "result": 0
                 },
                 "type": "lxc"
@@ -734,7 +733,7 @@ Restore
             },
             "state": {
                 "code": "completed",
-                "last_run": "2015-03-16 17:26:46",
+                "last_run": "2015-03-17 17:27:07",
                 "result": 0
             },
             "type": "lxc"
@@ -766,7 +765,7 @@ Restore
             },
             "state": {
                 "code": "completed",
-                "last_run": "2015-03-16 17:26:46",
+                "last_run": "2015-03-17 17:27:07",
                 "result": 0
             },
             "type": "lxc"

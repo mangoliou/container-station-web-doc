@@ -20,7 +20,7 @@ Preference
     .. sourcecode:: json
 
         {
-            "id": 3
+            "id": 5
         }
         
         
@@ -41,6 +41,8 @@ Preference
         {
             "backup_concurrent": "5",
             "doc_test": "I am sphinx",
+            "etag_template": "Fri, 15 May 2015 05:41:12 GMT",
+            "etag_xml": "Fri, 15 May 2015 05:41:10 GMT",
             "log_rotate": "30"
         }
         

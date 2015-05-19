@@ -16,6 +16,7 @@ Content
 
     system
     container
+    application
     resource
     image
     import

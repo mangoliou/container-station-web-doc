@@ -25,7 +25,7 @@ Authentication
         {
             "anonymous": false,
             "isAdmin": false,
-            "logintime": "2015-03-17 17:30:27",
+            "logintime": "2015-05-19 08:05:54",
             "username": "nobody"
         }
         
@@ -50,7 +50,7 @@ Authentication
         {
             "anonymous": false,
             "isAdmin": false,
-            "logintime": "2015-03-17 17:30:27",
+            "logintime": "2015-05-19 08:05:54",
             "username": "nobody"
         }
         
@@ -108,7 +108,7 @@ System Information
             "machine": "amd64",
             "processor": "Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz",
             "version": {
-                "docker_version": "1.5.0",
+                "docker_version": "1.6.1",
                 "lxc_version": "1.0.7",
                 "web": "unknown"
             }
@@ -133,15 +133,15 @@ System Information
     .. sourcecode:: json
 
         {
-            "cpu_usage": "15.0",
+            "cpu_usage": "0.0",
             "memory_usage": {
-                "buffers": 102,
-                "cached": 1582,
-                "percent": 17,
-                "percent_buffers": 2,
-                "percent_cached": 40,
+                "buffers": 125,
+                "cached": 1634,
+                "percent": 23,
+                "percent_buffers": 3,
+                "percent_cached": 41,
                 "total": 3953,
-                "used": 697
+                "used": 913
             }
         }
         

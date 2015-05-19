@@ -1,6 +1,7 @@
 Resource
 ==================
 
+.. contents::
 .. http:get:: /api/v1/container/(string:container_type)/(string:container_id)/all
 
     .. autosimple:: api.resource_all
@@ -22,51 +23,12 @@ Resource
     .. sourcecode:: json
 
         {
+            "arch": "amd64",
             "autostart": false,
             "image": "ubuntu-trusty",
             "name": "utest",
             "network": {
                 "hostname": "utest",
-                "port": []
-            },
-            "resource": {
-                "device": [],
-                "limit": {}
-            },
-            "type": "lxc",
-            "volume": {
-                "host": {}
-            }
-        }
-        
-        
-Hostname
-----------
-
-.. http:put:: /api/v1/container/(string:container_type)/(string:container_id)/network/hostname
-
-    Update container hostname.
-
-    :param container_type: ``lxc``, ``docker``
-    :param container_id: container id
-
-    **Example request**
-
-    .. sourcecode:: bash
-
-        $ curl -sq -XPUT -b cookies.txt -d 'yourhostname' \
-            http://${QIP}:${QPORT}/api/v1/container/lxc/utest/network/hostname 
-
-    **Example response**
-
-    .. sourcecode:: json
-
-        {
-            "autostart": false,
-            "image": "ubuntu-trusty",
-            "name": "utest",
-            "network": {
-                "hostname": "yourhostname",
                 "port": []
             },
             "resource": {
@@ -105,11 +67,12 @@ Auto start
     .. sourcecode:: json
 
         {
+            "arch": "amd64",
             "autostart": true,
             "image": "ubuntu-trusty",
             "name": "utest",
             "network": {
-                "hostname": "yourhostname",
+                "hostname": "utest",
                 "port": []
             },
             "resource": {
@@ -122,11 +85,12 @@ Auto start
             }
         }
         {
+            "arch": "amd64",
             "autostart": false,
             "image": "ubuntu-trusty",
             "name": "utest",
             "network": {
-                "hostname": "yourhostname",
+                "hostname": "utest",
                 "port": []
             },
             "resource": {
@@ -162,11 +126,12 @@ Port Forwarding
     .. sourcecode:: json
 
         {
+            "arch": "amd64",
             "autostart": false,
             "image": "ubuntu-trusty",
             "name": "utest",
             "network": {
-                "hostname": "yourhostname",
+                "hostname": "utest",
                 "port": [
                     [
                         12345,
@@ -227,9 +192,11 @@ Devices
     .. sourcecode:: json
 
         [
-            "Open_Sound_System_(OSS)",
-            "Direct_Render_Infrastructure_(DRI)",
-            "video4linux"
+            "Direct_Render_Infrastructure_(226)",
+            "Input_(13)",
+            "video4linux_(81)",
+            "Sound_and_ALSA_(14,_116)",
+            "TTY_(4)"
         ]
         
         
@@ -252,7 +219,7 @@ Devices
 
     .. sourcecode:: bash
 
-        $ curl -sq -XPOST -b cookies.txt -d '["allow", "Open_Sound_System_(OSS)", "rwm]' \
+        $ curl -sq -XPOST -b cookies.txt -d '["allow", "Input_(13)", "rwm"]' \
             http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/device
 
     **Example response**
@@ -260,18 +227,19 @@ Devices
     .. sourcecode:: json
 
         {
+            "arch": "amd64",
             "autostart": false,
             "image": "ubuntu-trusty",
             "name": "utest",
             "network": {
-                "hostname": "yourhostname",
+                "hostname": "utest",
                 "port": []
             },
             "resource": {
                 "device": [
                     [
                         "allow",
-                        "Open_Sound_System_(OSS)",
+                        "Input_(13)",
                         "rwm"
                     ]
                 ],
@@ -295,7 +263,7 @@ Devices
 
     .. sourcecode:: bash
 
-        $ curl -sq -XDELETE -b cookies.txt -d '["allow", "Open_Sound_System_(OSS)", "rwm"]' \
+        $ curl -sq -XDELETE -b cookies.txt -d '["allow", "Input_(13)", "rwm"]' \
             http://${QIP}:${QPORT}/api/v1/container/lxc/utest/resource/device
 
     **Example response**
@@ -330,11 +298,12 @@ Limit
     .. sourcecode:: json
 
         {
+            "arch": "amd64",
             "autostart": false,
             "image": "ubuntu-trusty",
             "name": "utest",
             "network": {
-                "hostname": "yourhostname",
+                "hostname": "utest",
                 "port": []
             },
             "resource": {

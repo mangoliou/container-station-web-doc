@@ -21,6 +21,7 @@ Container
     image           String     v     v      Assign a base image to the container
     tag             String     v     v      lxc is 'latest'
     autostart       Boolean    v     v      Automatically start the container after reboot
+    privileged      Boolean          v      Give extended privileges to this container
     entrypoint      String           v      Overwrite the default ENTRYPOINT of the image
     command         String           v      Run a command in container
     user            String           v      Username or UID
@@ -82,7 +83,7 @@ Container
                     "device": [
                         [
                             "allow",
-                            "Open_Sound_System_(OSS)",
+                            "video4linux_(81)",
                             "rw"
                         ]
                     ],
@@ -94,11 +95,11 @@ Container
                 },
                 "volume": {
                     "host": {
-                        "/test": {
+                        "/test/selenium": {
                             "bind": "/mnt/vol1",
                             "ro": true
                         },
-                        "/test/image": {
+                        "/test/spec": {
                             "bind": "/mnt/vol2",
                             "ro": false
                         }
@@ -141,6 +142,7 @@ Container
                 "image": "ubuntu",
                 "tag": "latest",
                 "autostart": false,
+                "privileged": true,
                 "entrypoint": "cat",
                 "command": "/etc/passwd",
                 "environment": [
@@ -166,11 +168,11 @@ Container
                 },
                 "volume": {
                     "host": {
-                        "/test": {
+                        "/test/selenium": {
                             "bind": "/mnt/vol1",
                             "ro": true
                         },
-                        "/test/image": {
+                        "/test/spec": {
                             "bind": "mnt/vol2",
                             "ro": false
                         }
@@ -187,12 +189,12 @@ Container
     .. sourcecode:: json
 
         {
-            "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
+            "id": "1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a",
             "name": "DockerTestAPI",
             "type": "docker"
         }
         {
-            "id": "0298a0baef28c3f3c6b41205b5ec36d35f54ed47407f797204bace90c50bb4b4",
+            "id": "11abb7a227d7c6001e8bb5f6418f284845123e6dc56ef95309e6d3881d51f3a4",
             "name": "DockerTestAPI2",
             "type": "docker"
         }
@@ -218,24 +220,29 @@ Container
 
         [
             {
+                "cpu": 0.0032679738562091504,
                 "id": "ctest",
                 "image": "ubuntu-trusty:latest",
+                "ipaddress": [
+                    "10.0.3.62"
+                ],
+                "memory": 11546624,
                 "name": "ctest",
-                "state": "stopped",
+                "rx": 180,
+                "state": "running",
+                "tx": 0,
                 "type": "lxc"
             },
             {
-                "cpu": 0.12590999338186631,
+                "cpu": 0.0,
                 "id": "utest",
                 "image": "ubuntu-trusty:latest",
-                "ipaddress": [
-                    "10.0.3.154"
-                ],
-                "memory": 11829248,
+                "ipaddress": [],
+                "memory": 1937408,
                 "name": "utest",
-                "rx": 1154,
+                "rx": 0,
                 "state": "running",
-                "tx": 622,
+                "tx": 0,
                 "type": "lxc"
             },
             {
@@ -246,7 +253,7 @@ Container
                 "type": "lxc"
             },
             {
-                "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
+                "id": "1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a",
                 "image": "ubuntu:latest",
                 "name": "DockerTestAPI",
                 "state": "stopped",
@@ -254,10 +261,10 @@ Container
             },
             {
                 "cpu": 0.0,
-                "id": "0298a0baef28c3f3c6b41205b5ec36d35f54ed47407f797204bace90c50bb4b4",
+                "id": "11abb7a227d7c6001e8bb5f6418f284845123e6dc56ef95309e6d3881d51f3a4",
                 "image": "ubuntu:latest",
                 "ipaddress": [],
-                "memory": 4677632,
+                "memory": 520192,
                 "name": "DockerTestAPI2",
                 "rx": 0,
                 "state": "running",
@@ -265,122 +272,73 @@ Container
                 "type": "docker"
             },
             {
-                "id": "33a1f5559bd06fd0c5a13bbb4ae9dd85490a9574391661c5c6b15068c9657aa4",
+                "id": "b52f11e1a8c782903ae2996331b9bd22c0f00625a893a1f4b937bf5f17584c8f",
                 "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "admiring_wilson",
+                "name": "admiring_mclean",
                 "state": "stopped",
                 "type": "docker"
             },
             {
-                "id": "0ab3bfaea1729fbdc51fc078538ac78698bf362a3b112f4350915a46c9ab94e6",
-                "image": "8b7588c28346",
-                "name": "agitated_elion",
+                "id": "9041046d4a51be3cb18b09d3df4745f4248328be9e086cae3b99d39313555a29",
+                "image": "qnap.dorowu.com/qnap/builder:latest",
+                "name": "cranky_lalande",
                 "state": "stopped",
                 "type": "docker"
             },
             {
-                "id": "59324ec24850e3d9a52cc399f16adfd6da507a873ab37ee8c99ee4934626b11d",
-                "image": "045e09d166d9",
-                "name": "cranky_bardeen",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "f3ba3b9a079f22268a01ab85047927fc625bdad631ef87d9cc2953fa4361813a",
+                "cpu": 0.0,
+                "id": "4a3633b8730da0bad1e1713894eeddf31488a06a9be83f979a1c29761a36c488",
                 "image": "ubuntu:latest",
+                "ipaddress": [
+                    "10.0.5.6"
+                ],
+                "memory": 4726784,
                 "name": "dtest",
-                "state": "stopped",
+                "rx": 0,
+                "state": "running",
+                "tx": 0,
                 "type": "docker"
             },
             {
-                "id": "801a6fd9ec880212694d1a48bd1706031c9f614a2a34e7eaf21284f3f938728e",
+                "id": "4f0ffbd93089155bacb086fba7530800b6c8f2bfce03bd9565b1c817c740f5ec",
                 "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "focused_hodgkin",
+                "name": "gloomy_sinoussi",
                 "state": "stopped",
                 "type": "docker"
             },
             {
-                "id": "787b0517b9909862b7497941a27659d83ab5c064b719310f2333e39962eb1b55",
+                "id": "c934121a39810a52384822f982a306fe0cd8974c3a63de2fedae33e46321a24e",
                 "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "high_archimedes",
+                "name": "sad_bohr",
                 "state": "stopped",
                 "type": "docker"
             },
             {
-                "id": "3c10e3f22a8fede63d868774e96d9899d5df393b37868377c6c48b9834f6dd44",
-                "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "hopeful_banach",
-                "state": "stopped",
+                "cpu": 0.0,
+                "id": "6103de4dc3164a7f2e3801b5e939b92a6621287282015eef6f90e770ed3ddd85",
+                "image": "sameersbn/postgresql:9.4",
+                "ipaddress": [
+                    "10.0.5.3"
+                ],
+                "memory": 40468480,
+                "name": "test_postgresql_1",
+                "rx": 0,
+                "state": "running",
+                "tx": 0,
                 "type": "docker"
             },
             {
-                "id": "8fc2a29223b2eac8d8f1e5083a4a7619ec595a51a3d86880ce420b0d8601a0eb",
-                "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "hungry_colden",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "f50c9cd23b3624a59e0bf64aa814c0ff4f6751015f4e3157955e3074943f6ae4",
-                "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "hungry_pare",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "4f90178c8a8b61c19db167662a27eeca49957303ca5d02f746b251637b42b8db",
-                "image": "b939fa700e56",
-                "name": "insane_elion",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "fd3f3f92fb01d557df08b1f6cc76276b0c64a2cb00bd36872003e4068494a47f",
-                "image": "045e09d166d9",
-                "name": "insane_lumiere",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "3b823e76249e9da4c072bf502965dc21c16e79fff2f14e173ed0a22283438907",
-                "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "loving_rosalind",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "565d8d6db7d15ca6b1ed755d1ef0231336e82f1de4225c69307730d6c29c2ce3",
-                "image": "qnap/builder:latest",
-                "name": "mad_davinci",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "97d0eaaad055fb195e9938cf084d26edad320c52c05b174513ca6ee0da7921f3",
-                "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "nostalgic_brown",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "20cadd2428e5f0a16c589214badb91fae268af096c0f07c23cecc8623898823b",
-                "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "pensive_cori",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "77baa72bafb8436aafec2fabd876e0462ddb2d63640da8bdeefeeb89ec78b528",
-                "image": "qnap.dorowu.com/qnap/builder:latest",
-                "name": "sick_sinoussi",
-                "state": "stopped",
-                "type": "docker"
-            },
-            {
-                "id": "38f6e30d0224831431ee0513e0a17fc12f45eb48d13575ae118db68107f0fa03",
-                "image": "ubuntu:latest",
-                "name": "thirsty_turing",
-                "state": "stopped",
+                "cpu": 0.0,
+                "id": "91c32e322df3121fa0566f6f98405fc1cfbfa74eec79444aa03ee178242ab2cd",
+                "image": "sameersbn/redmine:3.0.2",
+                "ipaddress": [
+                    "10.0.5.5"
+                ],
+                "memory": 210853888,
+                "name": "test_redmine_1",
+                "rx": 0,
+                "state": "running",
+                "tx": 0,
                 "type": "docker"
             }
         ]
@@ -422,14 +380,14 @@ Container
                 ],
                 "Env": [
                     "QPORT=90",
-                    "QIP=1.2.3.4",
-                    "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+                    "QIP=1.2.3.4"
                 ],
                 "ExposedPorts": {
                     "1234/udp": {}
                 },
                 "Hostname": "CustomHostName",
                 "Image": "ubuntu:latest",
+                "Labels": {},
                 "MacAddress": "",
                 "Memory": 805306368,
                 "MemorySwap": -1,
@@ -443,25 +401,34 @@ Container
                 "Volumes": null,
                 "WorkingDir": ""
             },
-            "Created": "2015-03-17T17:28:51.569306978Z",
-            "Driver": "devicemapper",
+            "Created": "2015-05-19T08:05:06.940651806Z",
+            "Driver": "aufs",
             "ExecDriver": "native-0.2",
             "ExecIDs": null,
             "HostConfig": {
                 "Binds": [
-                    "/home/vagrant/container-station-web/test/image:/mnt/vol2:rw",
-                    "/home/vagrant/container-station-web/test:/mnt/vol1:ro"
+                    "/home/vagrant/container-station-web/test/spec:/mnt/vol2:rw",
+                    "/home/vagrant/container-station-web/test/selenium:/mnt/vol1:ro"
                 ],
                 "CapAdd": null,
                 "CapDrop": null,
+                "CgroupParent": "",
                 "ContainerIDFile": "",
+                "CpuShares": 0,
+                "CpusetCpus": "",
                 "Devices": null,
                 "Dns": null,
                 "DnsSearch": null,
                 "ExtraHosts": null,
                 "IpcMode": "",
                 "Links": null,
+                "LogConfig": {
+                    "Config": null,
+                    "Type": "json-file"
+                },
                 "LxcConf": null,
+                "Memory": 0,
+                "MemorySwap": 0,
                 "NetworkMode": "",
                 "PidMode": "",
                 "PortBindings": {
@@ -472,7 +439,7 @@ Container
                         }
                     ]
                 },
-                "Privileged": false,
+                "Privileged": true,
                 "PublishAllPorts": false,
                 "ReadonlyRootfs": false,
                 "RestartPolicy": {
@@ -480,12 +447,14 @@ Container
                     "Name": ""
                 },
                 "SecurityOpt": null,
+                "Ulimits": null,
                 "VolumesFrom": null
             },
-            "HostnamePath": "/var/lib/docker/containers/08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765/hostname",
-            "HostsPath": "/var/lib/docker/containers/08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765/hosts",
-            "Id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
-            "Image": "2d24f826cb16146e2016ff349a8a33ed5830f3b938d45c0f82943f4ab8c097e7",
+            "HostnamePath": "/var/lib/docker/containers/1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a/hostname",
+            "HostsPath": "/var/lib/docker/containers/1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a/hosts",
+            "Id": "1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a",
+            "Image": "07f8e8c5e66084bef8f848877857537ffe1c47edd01a93af27e7161672ad0e95",
+            "LogPath": "/var/lib/docker/containers/1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a/1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a-json.log",
             "MountLabel": "",
             "Name": "/DockerTestAPI",
             "NetworkSettings": {
@@ -504,22 +473,23 @@ Container
             },
             "Path": "cat",
             "ProcessLabel": "",
-            "ResolvConfPath": "/var/lib/docker/containers/08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765/resolv.conf",
+            "ResolvConfPath": "/var/lib/docker/containers/1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a/resolv.conf",
             "RestartCount": 0,
             "State": {
+                "Dead": false,
                 "Error": "",
                 "ExitCode": 0,
-                "FinishedAt": "2015-03-17T17:28:52.158493073Z",
+                "FinishedAt": "2015-05-19T08:05:07.230472971Z",
                 "OOMKilled": false,
                 "Paused": false,
                 "Pid": 0,
                 "Restarting": false,
                 "Running": false,
-                "StartedAt": "2015-03-17T17:28:52.075450136Z"
+                "StartedAt": "2015-05-19T08:05:07.172782762Z"
             },
             "Volumes": {
-                "/mnt/vol1": "/home/vagrant/container-station-web/test",
-                "/mnt/vol2": "/home/vagrant/container-station-web/test/image"
+                "/mnt/vol1": "/home/vagrant/container-station-web/test/selenium",
+                "/mnt/vol2": "/home/vagrant/container-station-web/test/spec"
             },
             "VolumesRW": {
                 "/mnt/vol1": false,
@@ -551,7 +521,7 @@ Container
     .. sourcecode:: json
 
         {
-            "logs": ":0:root:/root:/bin/bash\r\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\r\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\r\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\r\nsync:x:4:65534:sync:/bin:/bin/sync\r\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\r\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\r\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\r\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\r\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin\r\nuucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin\r\nproxy:x:13:13:proxy:/bin:/usr/sbin/nologin\r\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\r\nbackup:x:34:34:backup:/var/backups:/usr/sbin/nologin\r\nlist:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin\r\nirc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin\r\ngnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin\r\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\r\nlibuuid:x:100:101::/var/lib/libuuid:\r\nsyslog:x:101:104::/home/syslog:/bin/false\r\n",
+            "logs": ":0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin\nuucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin\nproxy:x:13:13:proxy:/bin:/usr/sbin/nologin\nwww-data:x:33:33:www-data:/var/www:/usr/sbin/nologin\nbackup:x:34:34:backup:/var/backups:/usr/sbin/nologin\nlist:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin\nirc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin\ngnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin\nnobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin\nlibuuid:x:100:101::/var/lib/libuuid:\nsyslog:x:101:104::/home/syslog:/bin/false\n",
             "tail": 100
         }
         
@@ -594,7 +564,7 @@ Container
 
         {
             "cpu": 0.0,
-            "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
+            "id": "1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a",
             "image": "ubuntu:latest",
             "ipaddress": [],
             "memory": 0,
@@ -643,10 +613,15 @@ Container
     .. sourcecode:: json
 
         {
-            "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
+            "cpu": 0.0,
+            "id": "1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a",
             "image": "ubuntu:latest",
+            "ipaddress": [],
+            "memory": 0,
             "name": "DockerTestAPI",
-            "state": "stopped",
+            "rx": 0,
+            "state": "running",
+            "tx": 0,
             "type": "docker"
         }
         
@@ -684,7 +659,7 @@ Container
             "id": "utest",
             "image": "ubuntu-trusty:latest",
             "ipaddress": [],
-            "memory": 2097152,
+            "memory": 1941504,
             "name": "utest",
             "rx": 0,
             "state": "running",
@@ -710,17 +685,17 @@ Container
     .. sourcecode:: json
 
         {
-            "cpu": 0.0,
+            "cpu": 0.07484022872519341,
             "id": "utest",
             "image": "ubuntu-trusty:latest",
             "ipaddress": [
-                "10.0.3.154"
+                "10.0.3.21"
             ],
-            "memory": 10637312,
+            "memory": 10723328,
             "name": "utest",
-            "rx": 70,
+            "rx": 1145,
             "state": "running",
-            "tx": 90,
+            "tx": 1310,
             "type": "lxc"
         }
         
@@ -737,7 +712,7 @@ Container
     .. sourcecode:: json
 
         {
-            "id": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
+            "id": "1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a",
             "image": "ubuntu:latest",
             "name": "DockerTestAPI",
             "state": "stopped",

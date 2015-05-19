@@ -42,7 +42,7 @@ Export
             "cname": "utest",
             "compress": true,
             "id": 1,
-            "init": 1426613368,
+            "init": 1432022721,
             "path": "/test/c.tgz",
             "state": "waiting",
             "type": "lxc",
@@ -66,11 +66,11 @@ Export
     .. sourcecode:: json
 
         {
-            "cid": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
+            "cid": "1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a",
             "cname": "DockerTestAPI",
             "compress": true,
             "id": 2,
-            "init": 1426613369,
+            "init": 1432022721,
             "path": "/test/d.tgz",
             "state": "waiting",
             "type": "docker",
@@ -107,11 +107,11 @@ Export
 
         [
             {
-                "cid": "08fd4fac14b85af65da4a7d9c4f9d8feb5f3ef39f2ccd978c753151de9a42765",
+                "cid": "1753ab55c36e99195042ddc875e59d4f877f1c140d25196ad34a5bece9f1cf3a",
                 "cname": "DockerTestAPI",
                 "compress": true,
                 "id": 2,
-                "init": 1426613369,
+                "init": 1432022721,
                 "path": "/test/d.tgz",
                 "state": "waiting",
                 "type": "docker",
@@ -122,10 +122,10 @@ Export
                 "cname": "utest",
                 "compress": true,
                 "id": 1,
-                "init": 1426613368,
+                "init": 1432022721,
                 "path": "/test/c.tgz",
                 "progress": 0,
-                "start": 1426613368,
+                "start": 1432022721,
                 "state": "running",
                 "type": "lxc",
                 "user": "Anonymous"
@@ -153,10 +153,10 @@ Export
                 "cname": "utest",
                 "compress": true,
                 "id": 1,
-                "init": 1426613368,
+                "init": 1432022721,
                 "path": "/test/c.tgz",
-                "progress": 26,
-                "start": 1426613368,
+                "progress": 50,
+                "start": 1432022721,
                 "state": "running",
                 "type": "lxc",
                 "user": "Anonymous"
@@ -200,18 +200,20 @@ Import
 
     **Example response**
 
-    .. runcode:: bash
+    .. sourcecode:: json
 
-        curl -sq -XPOST -d '{"path": "test/c.tgz", "compress": true}' -b cookies.txt http://${QIP}:${QPORT}/api/v1/container/lxc/utest/export -o /dev/null;
-        for i in `seq 10`; do curl -sq -m 5 -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/export/progress -o /dev/null;
-            if [ "$?" -eq "28" ]; then
-                break;
-            fi;
-            sleep 5;
-        done;
-        curl -sq -XGET -b cookies.txt http://${QIP}:${QPORT}/api/v1/import/test/?name=c.tgz | python -mjson.tool;
-
-
+        {
+            "arch": "amd64",
+            "autostart": false,
+            "image": "ubuntu-trusty",
+            "name": "utest",
+            "network": {},
+            "resource": {},
+            "type": "lxc",
+            "volume": {}
+        }
+        
+        
 .. http:post:: /api/v1/import/(string:dirpath)/
 
     Create an import task if name is given. The JSON parameters are the same as :http:post:`/api/v1/container`.
@@ -243,7 +245,7 @@ Import
                     "device": [
                         [
                             "allow",
-                            "Open_Sound_System_(OSS)",
+                            "video4linux_(81)",
                             "rw"
                         ]
                     ],
@@ -291,7 +293,7 @@ Import
                     "device": [
                         [
                             "allow",
-                            "Open_Sound_System_(OSS)",
+                            "video4linux_(81)",
                             "rw"
                         ]
                     ],
@@ -314,7 +316,7 @@ Import
             },
             "id": 1,
             "image": "import",
-            "init": 1426613400,
+            "init": 1432022743,
             "path": "/test/c.tgz",
             "state": "waiting",
             "type": "lxc",
@@ -351,13 +353,13 @@ Import
             {
                 "cid": "utest_import",
                 "cname": "utest_import",
-                "create_params": "{u'resource': {u'device': [[u'allow', u'Open_Sound_System_(OSS)', u'rw']], u'limit': {u'memory': u'768m', u'cputime': 512, u'cpuweight': 512}}, u'name': u'utest_import', u'image': 'import', u'volume': {u'host': {None: {u'bind': u'/mnt/vol1', u'ro': True}}}, 'tag': 'latest', u'type': u'lxc', u'network': {u'hostname': u'CustomHostName', u'port': [[12345, 1234, u'udp']]}}",
+                "create_params": "{u'resource': {u'device': [[u'allow', u'video4linux_(81)', u'rw']], u'limit': {u'memory': u'768m', u'cputime': 512, u'cpuweight': 512}}, u'name': u'utest_import', u'image': 'import', u'volume': {u'host': {None: {u'bind': u'/mnt/vol1', u'ro': True}}}, 'tag': 'latest', u'type': u'lxc', u'network': {u'hostname': u'CustomHostName', u'port': [[12345, 1234, u'udp']]}}",
                 "id": 1,
                 "image": "import",
-                "init": 1426613400,
+                "init": 1432022743,
                 "path": "/test/c.tgz",
                 "progress": 4,
-                "start": 1426613400,
+                "start": 1432022743,
                 "state": "running",
                 "type": "lxc",
                 "user": "Anonymous"
@@ -383,13 +385,13 @@ Import
             {
                 "cid": "utest_import",
                 "cname": "utest_import",
-                "create_params": "{u'resource': {u'device': [[u'allow', u'Open_Sound_System_(OSS)', u'rw']], u'limit': {u'memory': u'768m', u'cputime': 512, u'cpuweight': 512}}, u'name': u'utest_import', u'image': 'import', u'volume': {u'host': {None: {u'bind': u'/mnt/vol1', u'ro': True}}}, 'tag': 'latest', u'type': u'lxc', u'network': {u'hostname': u'CustomHostName', u'port': [[12345, 1234, u'udp']]}}",
+                "create_params": "{u'resource': {u'device': [[u'allow', u'video4linux_(81)', u'rw']], u'limit': {u'memory': u'768m', u'cputime': 512, u'cpuweight': 512}}, u'name': u'utest_import', u'image': 'import', u'volume': {u'host': {None: {u'bind': u'/mnt/vol1', u'ro': True}}}, 'tag': 'latest', u'type': u'lxc', u'network': {u'hostname': u'CustomHostName', u'port': [[12345, 1234, u'udp']]}}",
                 "id": 1,
                 "image": "import",
-                "init": 1426613400,
+                "init": 1432022743,
                 "path": "/test/c.tgz",
-                "progress": 11,
-                "start": 1426613400,
+                "progress": 9,
+                "start": 1432022743,
                 "state": "running",
                 "type": "lxc",
                 "user": "Anonymous"
@@ -446,7 +448,9 @@ File operations
             {
                 "is_dir": true,
                 "name": "test",
+                "totalsize": "40G",
                 "type": "d",
+                "usedsize": "143M",
                 "write": true
             }
         ]
@@ -454,11 +458,6 @@ File operations
             {
                 "is_dir": true,
                 "name": "backup",
-                "type": "d"
-            },
-            {
-                "is_dir": true,
-                "name": "image",
                 "type": "d"
             },
             {
@@ -527,11 +526,6 @@ File operations
             {
                 "is_dir": true,
                 "name": "backup",
-                "type": "d"
-            },
-            {
-                "is_dir": true,
-                "name": "image",
                 "type": "d"
             },
             {
